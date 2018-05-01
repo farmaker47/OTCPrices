@@ -1,5 +1,6 @@
 package com.george.otcprices;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,7 +10,14 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.george.otcprices.data.OTCMainDBHelper;
+
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
+
+    private OTCMainDBHelper otcMainDBHelper;
+    private SQLiteDatabase mDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        try {
+            otcMainDBHelper = new OTCMainDBHelper(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mDB = otcMainDBHelper.getReadableDatabase();
+
+        setTitle(getString(R.string.otc_prices_title));
     }
 
     @Override
