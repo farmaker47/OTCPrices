@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">O.T.CPrices</string>
+    <string name="action_settings">Settings</string>
+    <string name="db_Not_exist">Database doesn\'t exist</string>
+    <string name="db_exist">Database exists.</string>
+    <string name="error_copying_db">Error copying database</string>
+</resources>
