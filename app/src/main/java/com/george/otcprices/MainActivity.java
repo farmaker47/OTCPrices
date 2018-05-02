@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
@@ -38,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayoutManager layoutManager;
     private MainRecyclerViewAdapter mainRecyclerViewAdapter;
     private SearchView searchView;
+
+    private Parcelable savedRecyclerLayoutState;
+    private static final String BUNDLE_RECYCLER_LAYOUT = "recycler_layout";
 
     @BindView(R.id.recyclerMainMedicine)
     RecyclerView recyclerViewMain;
@@ -79,6 +83,11 @@ public class MainActivity extends AppCompatActivity {
         mainRecyclerViewAdapter = new MainRecyclerViewAdapter(this, medicineList);
         recyclerViewMain.setAdapter(mainRecyclerViewAdapter);
 
+        //restore recycler view at same position
+        if (savedInstanceState != null) {
+            savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
+        }
+
 
         //start loader to fetch medicines
         android.support.v4.app.LoaderManager loaderManager = getSupportLoaderManager();
@@ -88,6 +97,12 @@ public class MainActivity extends AppCompatActivity {
         } else {
             loaderManager.restartLoader(DATABASE_LOADER, null, mLoaderDatabase);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(BUNDLE_RECYCLER_LAYOUT, layoutManager.onSaveInstanceState());
     }
 
     private LoaderManager.LoaderCallbacks mLoaderDatabase = new LoaderManager.LoaderCallbacks<Cursor>() {
@@ -150,6 +165,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
             mainRecyclerViewAdapter.setMedicineData(medicineList);
+
+            //restore recycler view position
+            if (savedRecyclerLayoutState != null) {
+                layoutManager.onRestoreInstanceState(savedRecyclerLayoutState);
+            }
         }
 
 
