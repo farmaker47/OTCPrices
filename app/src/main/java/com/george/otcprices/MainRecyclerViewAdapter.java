@@ -7,10 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -21,14 +21,16 @@ import butterknife.ButterKnife;
  * Created by farmaker1 on 01/05/2018.
  */
 
-public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerViewAdapter.MainViewHolder> {
+public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerViewAdapter.MainViewHolder> implements Filterable {
 
     private Context mContext;
     private ArrayList<MedicinesObject> medicinesArray;
+    private ArrayList<MedicinesObject> medicinesArrayFiltered;
 
-    public MainRecyclerViewAdapter(Context context,ArrayList<MedicinesObject> list) {
+    public MainRecyclerViewAdapter(Context context, ArrayList<MedicinesObject> list) {
         mContext = context;
         medicinesArray = list;
+        medicinesArrayFiltered = list;
     }
 
 
@@ -43,7 +45,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     @Override
     public void onBindViewHolder(MainRecyclerViewAdapter.MainViewHolder holder, int position) {
 
-        MedicinesObject medicinesObject = medicinesArray.get(position);
+        MedicinesObject medicinesObject = medicinesArrayFiltered.get(position);
 
         holder.textTitle.setText(medicinesObject.getName());
         holder.textPrice.setText(medicinesObject.getPrice());
@@ -58,7 +60,41 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
     @Override
     public int getItemCount() {
-        return medicinesArray.size();
+        return medicinesArrayFiltered.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    medicinesArrayFiltered = medicinesArray;
+                } else {
+                    ArrayList<MedicinesObject> filteredList = new ArrayList<>();
+                    for (MedicinesObject row : medicinesArray) {
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.getName().toLowerCase().contains(charString.toLowerCase()) || row.getPrice().contains(charSequence)) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    medicinesArrayFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = medicinesArrayFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                medicinesArrayFiltered = (ArrayList<MedicinesObject>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class MainViewHolder extends RecyclerView.ViewHolder {
