@@ -22,7 +22,7 @@ public class OTCMainDBHelper extends SQLiteOpenHelper {
 
     private Context mContext;
     public static final String DB_NAME = "otcData.db";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
     private SQLiteDatabase mDb;
 
     public OTCMainDBHelper(Context context) throws IOException {

@@ -139,12 +139,13 @@ public class MainActivity extends AppCompatActivity {
 
                 while (!data.isAfterLast()) {
                     medicineList.add(new MedicinesObject(data.getString(data.getColumnIndex(OtcConract.MainRecycler.MAIN_NAME)),
-                            data.getString(data.getColumnIndex(OtcConract.MainRecycler.MAIN_PRICE)),data.getBlob(data.getColumnIndex(OtcConract.MainRecycler.MAIN_IMAGE))));
+                            data.getString(data.getColumnIndex(OtcConract.MainRecycler.MAIN_PRICE)),
+                            data.getBlob(data.getColumnIndex(OtcConract.MainRecycler.MAIN_IMAGE))));
                     data.moveToNext();
                 }
-
+                data.close();
             }
-            data.close();
+
             mainRecyclerViewAdapter.setMedicineData(medicineList);
         }
 
