@@ -5,11 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -56,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         if (savedInstanceState != null) {
             mSearchString = savedInstanceState.getString(SEARCH_KEY);
-            Log.e("rotate",mSearchString);
         }
     }
 
@@ -128,7 +129,10 @@ public class MainActivity extends AppCompatActivity {
     private LoaderManager.LoaderCallbacks mLoaderDatabase = new LoaderManager.LoaderCallbacks<Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-            return new AsyncTaskLoader<Cursor>(MainActivity.this) {
+
+            return new CursorLoader(MainActivity.this,OtcConract.MainRecycler.CONTENT_URI_MAIN,null,null,null,null);
+
+            /*return new AsyncTaskLoader<Cursor>(MainActivity.this) {
 
                 Cursor cursor;
 
@@ -144,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public Cursor loadInBackground() {
+
                     try {
                         Cursor mCursor = mDb.query(OtcConract.MainRecycler.TABLE_NAME,
                                 null,
@@ -165,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                     super.deliverResult(data);
                 }
 
-            };
+            };*/
         }
 
         @Override
@@ -190,6 +195,7 @@ public class MainActivity extends AppCompatActivity {
             if (savedRecyclerLayoutState != null) {
                 layoutManager.onRestoreInstanceState(savedRecyclerLayoutState);
             }
+
         }
 
 
@@ -229,14 +235,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        MenuItem searchMenuItem = menu.findItem(R.id.action_search);
         //focus the SearchView
         if (mSearchString != null && !mSearchString.isEmpty()) {
             searchView.setIconified(true);
             searchView.onActionViewExpanded();
-            searchView.setQuery(mSearchString, true);
+
             searchView.setFocusable(true);
+
+            // Handler which will run after 2 seconds for finishing after delay of cursorloader
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    searchView.setQuery(mSearchString, true);
+                }
+            }, 50);
         }
 
         return true;

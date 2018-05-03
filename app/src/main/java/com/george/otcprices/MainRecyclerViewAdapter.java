@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +61,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
     @Override
     public int getItemCount() {
+        Log.e("number",String.valueOf(medicinesArrayFiltered.size()));
         return medicinesArrayFiltered.size();
     }
 
@@ -71,6 +73,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
                 String charString = charSequence.toString();
                 if (charString.isEmpty()) {
                     medicinesArrayFiltered = medicinesArray;
+                    Log.e("empty","empty");
                 } else {
                     ArrayList<MedicinesObject> filteredList = new ArrayList<>();
                     for (MedicinesObject row : medicinesArray) {
@@ -82,6 +85,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
                     }
 
                     medicinesArrayFiltered = filteredList;
+                    Log.e("NOTempty","NOTempty");
                 }
 
                 FilterResults filterResults = new FilterResults();
@@ -116,6 +120,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
     public void setMedicineData(ArrayList<MedicinesObject> list) {
         medicinesArray = list;
+        Log.e("numberSetData",String.valueOf(medicinesArray.size()));
         notifyDataSetChanged();
     }
 
