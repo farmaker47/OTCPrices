@@ -16,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayoutManager layoutManager;
     private MainRecyclerViewAdapter mainRecyclerViewAdapter;
     private SearchView searchView;
+    private static final String SEARCH_KEY = "search_key";
+    private String mSearchString;
 
     private Parcelable savedRecyclerLayoutState;
     private static final String BUNDLE_RECYCLER_LAYOUT = "recycler_layout";
@@ -88,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
             savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
         }
 
-
         //start loader to fetch medicines
         android.support.v4.app.LoaderManager loaderManager = getSupportLoaderManager();
         Loader<String> internetLoader = loaderManager.getLoader(DATABASE_LOADER);
@@ -100,9 +102,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            mSearchString = savedInstanceState.getString(SEARCH_KEY);
+            Log.e("rotate",mSearchString);
+        }
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(BUNDLE_RECYCLER_LAYOUT, layoutManager.onSaveInstanceState());
+
+        //save the search query if present
+        mSearchString = searchView.getQuery().toString();
+        outState.putString(SEARCH_KEY, mSearchString);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private LoaderManager.LoaderCallbacks mLoaderDatabase = new LoaderManager.LoaderCallbacks<Cursor>() {
@@ -208,8 +228,21 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+
+        MenuItem searchMenuItem = menu.findItem(R.id.action_search);
+        //focus the SearchView
+        if (mSearchString != null && !mSearchString.isEmpty()) {
+            searchView.setIconified(true);
+            searchView.onActionViewExpanded();
+            searchView.setQuery(mSearchString, true);
+            searchView.setFocusable(true);
+        }
+
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
