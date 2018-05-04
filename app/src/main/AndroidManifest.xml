@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.george.otcprices">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -32,6 +36,9 @@
             android:name=".data.OtcContentProvider"
             android:authorities="com.george.otcprices"
             android:exported="false" />
+
+        <service android:name=".utils.OtcDBService"
+            android:exported="false"/>
     </application>
 
 </manifest>

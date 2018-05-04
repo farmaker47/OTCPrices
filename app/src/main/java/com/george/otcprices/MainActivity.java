@@ -1,7 +1,10 @@
 package com.george.otcprices;
 
 import android.app.SearchManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -25,6 +28,8 @@ import android.view.View;
 
 import com.george.otcprices.data.OTCMainDBHelper;
 import com.george.otcprices.data.OtcConract;
+import com.george.otcprices.utils.DownloadDBFunction;
+import com.george.otcprices.utils.OtcDBService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
     private SearchView searchView;
     private static final String SEARCH_KEY = "search_key";
     private String mSearchString;
+
+    private BroadcastReceiver mBroadcastReceiver;
+    private IntentFilter mFilter;
 
     private Parcelable savedRecyclerLayoutState;
     private static final String BUNDLE_RECYCLER_LAYOUT = "recycler_layout";
@@ -101,6 +109,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             loaderManager.restartLoader(DATABASE_LOADER, null, mLoaderDatabase);
         }
+
+        mBroadcastReceiver = new OtcMedicineBroadcast();
+        mFilter = new IntentFilter();
+        mFilter.addAction(DownloadDBFunction.NUMBER_OF_FIREBASE_RECEIVER);
     }
 
     @Override
@@ -124,15 +136,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        registerReceiver(mBroadcastReceiver, mFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(mBroadcastReceiver);
     }
 
     private LoaderManager.LoaderCallbacks mLoaderDatabase = new LoaderManager.LoaderCallbacks<Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
-            return new CursorLoader(MainActivity.this,OtcConract.MainRecycler.CONTENT_URI_MAIN,null,null,null,null);
+            /*return new CursorLoader(MainActivity.this,OtcConract.MainRecycler.CONTENT_URI_MAIN,null,null,null,null);*/
 
-            /*return new AsyncTaskLoader<Cursor>(MainActivity.this) {
+            return new AsyncTaskLoader<Cursor>(MainActivity.this) {
 
                 Cursor cursor;
 
@@ -170,8 +189,9 @@ public class MainActivity extends AppCompatActivity {
                     super.deliverResult(data);
                 }
 
-            };*/
+            };
         }
+
 
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -195,6 +215,10 @@ public class MainActivity extends AppCompatActivity {
             if (savedRecyclerLayoutState != null) {
                 layoutManager.onRestoreInstanceState(savedRecyclerLayoutState);
             }
+
+
+            //call below again because there is a delay between query filter and cursor loader results
+            /*searchViewQuery();*/
 
         }
 
@@ -235,24 +259,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        searchViewQuery();
+
+        return true;
+    }
+
+    private void searchViewQuery(){
         //focus the SearchView
         if (mSearchString != null && !mSearchString.isEmpty()) {
             searchView.setIconified(true);
             searchView.onActionViewExpanded();
-
+            searchView.setQuery(mSearchString, true);
             searchView.setFocusable(true);
 
-            // Handler which will run after 2 seconds for finishing after delay of cursorloader
+            /*mainRecyclerViewAdapter.setMedicineData(medicineList);*/
+
+           /* // Handler which will run after 2 seconds for finishing after delay of cursorloader
             new Handler().postDelayed(new Runnable() {
 
                 @Override
                 public void run() {
                     searchView.setQuery(mSearchString, true);
                 }
-            }, 50);
+            }, 50);*/
         }
-
-        return true;
     }
 
 
@@ -273,6 +303,12 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        if (id == R.id.action_download_firebase_manually) {
+            Intent intent = new Intent(this, OtcDBService.class);
+            startService(intent);
+            return true;
+        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -286,5 +322,30 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         super.onBackPressed();
+    }
+
+    private class OtcMedicineBroadcast extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(DownloadDBFunction.NUMBER_OF_FIREBASE_RECEIVER)) {
+                //start loader to fetch medicines
+                android.support.v4.app.LoaderManager loaderManager = getSupportLoaderManager();
+                Loader<String> internetLoader = loaderManager.getLoader(DATABASE_LOADER);
+                if (internetLoader == null) {
+                    Log.e("receiver","init");
+                    loaderManager.initLoader(DATABASE_LOADER, null, mLoaderDatabase);
+                } else {
+                    Log.e("receiver","restart");
+/*
+                    ArrayList<MedicinesObject> arrayListDummy = new ArrayList<>();
+                    mainRecyclerViewAdapter.setMedicineDataAfterDownload(medicineList);*/
+
+                    loaderManager.restartLoader(DATABASE_LOADER, null, mLoaderDatabase);
+                    /*mainRecyclerViewAdapter.setMedicineDataAfterDownload(medicineList);*/
+
+                }
+            }
+        }
     }
 }

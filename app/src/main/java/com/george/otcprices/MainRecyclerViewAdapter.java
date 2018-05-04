@@ -18,10 +18,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by farmaker1 on 01/05/2018.
- */
-
 public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerViewAdapter.MainViewHolder> implements Filterable {
 
     private Context mContext;
@@ -61,8 +57,12 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
     @Override
     public int getItemCount() {
-        Log.e("number",String.valueOf(medicinesArrayFiltered.size()));
-        return medicinesArrayFiltered.size();
+        if (medicinesArrayFiltered != null) {
+            Log.e("number", String.valueOf(medicinesArrayFiltered.size()));
+            return medicinesArrayFiltered.size();
+        } else {
+            return 0;
+        }
     }
 
     @Override
@@ -73,7 +73,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
                 String charString = charSequence.toString();
                 if (charString.isEmpty()) {
                     medicinesArrayFiltered = medicinesArray;
-                    Log.e("empty","empty");
+                    Log.e("Empty", "String");
                 } else {
                     ArrayList<MedicinesObject> filteredList = new ArrayList<>();
                     for (MedicinesObject row : medicinesArray) {
@@ -85,17 +85,18 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
                     }
 
                     medicinesArrayFiltered = filteredList;
-                    Log.e("NOTempty","NOTempty");
                 }
 
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = medicinesArrayFiltered;
+                Log.e("outside", "String");
                 return filterResults;
             }
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
                 medicinesArrayFiltered = (ArrayList<MedicinesObject>) filterResults.values;
+                Log.e("publishResults", "String");
                 notifyDataSetChanged();
             }
         };
@@ -119,8 +120,17 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     }
 
     public void setMedicineData(ArrayList<MedicinesObject> list) {
-        medicinesArray = list;
-        Log.e("numberSetData",String.valueOf(medicinesArray.size()));
+        medicinesArrayFiltered = null;
+        medicinesArrayFiltered = new ArrayList<>();
+        medicinesArrayFiltered = list;
+        notifyDataSetChanged();
+    }
+
+
+    public void setMedicineDataAfterDownload(ArrayList<MedicinesObject> list) {
+        medicinesArrayFiltered = new ArrayList<>();
+        medicinesArrayFiltered = list;
+
         notifyDataSetChanged();
     }
 

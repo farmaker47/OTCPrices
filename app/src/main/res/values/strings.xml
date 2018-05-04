@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">O.T.CPrices</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Instructions</string>
     <string name="db_Not_exist">Database doesn\'t exist</string>
     <string name="db_exist">Database exists.</string>
     <string name="error_copying_db">Error copying database</string>
@@ -8,4 +8,6 @@
     <string name="search">search</string>
     <string name="search_hint">search</string>
     <string name="unknown">Unkown uri:</string>
+    <string name="db_firebase_path"><![CDATA[https://firebasestorage.googleapis.com/v0/b/snow-1557b.appspot.com/o/otcData.db?alt=media&token=e3d344fe-cfe1-4d8c-8d78-ab99c8eb347a]]></string>
+    <string name="action_manual_download">Download Database</string>
 </resources>
