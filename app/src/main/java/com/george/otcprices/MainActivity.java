@@ -333,16 +333,11 @@ public class MainActivity extends AppCompatActivity {
                 android.support.v4.app.LoaderManager loaderManager = getSupportLoaderManager();
                 Loader<String> internetLoader = loaderManager.getLoader(DATABASE_LOADER);
                 if (internetLoader == null) {
-                    Log.e("receiver","init");
                     loaderManager.initLoader(DATABASE_LOADER, null, mLoaderDatabase);
                 } else {
-                    Log.e("receiver","restart");
-/*
-                    ArrayList<MedicinesObject> arrayListDummy = new ArrayList<>();
-                    mainRecyclerViewAdapter.setMedicineDataAfterDownload(medicineList);*/
-
+                    //after downloading the fresh db we first clear the list and then we restart the loader
+                    mainRecyclerViewAdapter.setMedicineDataAfterDownload();
                     loaderManager.restartLoader(DATABASE_LOADER, null, mLoaderDatabase);
-                    /*mainRecyclerViewAdapter.setMedicineDataAfterDownload(medicineList);*/
 
                 }
             }

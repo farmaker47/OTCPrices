@@ -120,18 +120,15 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     }
 
     public void setMedicineData(ArrayList<MedicinesObject> list) {
-        medicinesArrayFiltered = null;
+
         medicinesArrayFiltered = new ArrayList<>();
         medicinesArrayFiltered = list;
         notifyDataSetChanged();
+
     }
 
-
-    public void setMedicineDataAfterDownload(ArrayList<MedicinesObject> list) {
-        medicinesArrayFiltered = new ArrayList<>();
-        medicinesArrayFiltered = list;
-
-        notifyDataSetChanged();
+    public void setMedicineDataAfterDownload() {
+        medicinesArrayFiltered.clear();
     }
 
     // convert from byte array to bitmap
