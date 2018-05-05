@@ -1,8 +1,10 @@
 package com.george.otcprices;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +25,8 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     private Context mContext;
     private ArrayList<MedicinesObject> medicinesArray;
     private ArrayList<MedicinesObject> medicinesArrayFiltered;
+    private double marginInt, totalMargin, marginObjectInt;
+    private String margin, marginObject;
 
     public MainRecyclerViewAdapter(Context context, ArrayList<MedicinesObject> list) {
         mContext = context;
@@ -48,7 +52,22 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         String idOfMedicine = medicinesObject.getNumberPosition();
 
         holder.textTitle.setText(medicinesObject.getName());
-        holder.textPrice.setText(medicinesObject.getPrice());
+
+        //getting the margin everytime the app starts or resumes in case user has changed margin
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        margin = sharedPreferences.getString(mContext.getString(R.string.pref_margin_key),
+                mContext.getString(R.string.pref_margin_default));
+
+        marginObject = medicinesObject.getPrice();
+
+        marginInt = Double.parseDouble(margin);
+        marginObjectInt = Double.parseDouble(marginObject);
+
+        //total price = base price x margin x VAT
+        totalMargin = marginObjectInt * ((100 + marginInt) / 100) * 1.24;
+        totalMargin = Math.round(totalMargin * 100);
+        totalMargin = totalMargin / 100;
+        holder.textPrice.setText(String.valueOf(totalMargin));
 
 
         //Get image from database

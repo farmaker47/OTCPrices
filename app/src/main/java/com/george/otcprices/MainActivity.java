@@ -182,14 +182,16 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String margin = sharedPreferences.getString(getString(R.string.pref_margin_key),
                 getString(R.string.pref_margin_default));
-        Log.e("margin", margin);
 
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        Log.e("marginAfter", "change");
+
+        mainRecyclerViewAdapter.setMedicineDataAfterDownload();
+        getSupportLoaderManager().restartLoader(DATABASE_LOADER, null, mLoaderDatabase);
+
         if (key.equals("margin_key")) {
             String margin = sharedPreferences.getString("margin_key", getString(R.string.pref_margin_default));
             Log.e("marginAfter", margin);
