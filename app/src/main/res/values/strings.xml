@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">O.T.CPrices</string>
-    <string name="action_settings">Instructions</string>
+    <string name="action_settings">Settings</string>
     <string name="db_Not_exist">Database doesn\'t exist</string>
     <string name="db_exist">Database exists.</string>
     <string name="error_copying_db">Error copying database</string>
@@ -14,4 +14,8 @@
     <string name="new_db">new_db</string>
     <string name="notification">OTCPrices</string>
     <string name="newDBDownloadCompleted">Download of new database completed</string>
+    <string name="advertisment">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="pref_margin_default">35</string>
+    <string name="pref_margin_key">margin_key</string>
+    <string name="pref_margin_label">Select margin</string>
 </resources>

@@ -15,16 +15,12 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by farmaker1 on 04/05/2018.
- */
-
 public class DownloadDBFunction {
 
     public static final String NUMBER_OF_FIREBASE_RECEIVER = "updating";
 
     //Method for downloading a FRESH database from internet so it can be overwritten
-    public static void downloadFromInternet(Context context){
+    public static void downloadFromInternet(Context context) {
         String urlToUse = context.getString(R.string.db_firebase_path);
 
         InputStream input = null;
@@ -90,7 +86,6 @@ public class DownloadDBFunction {
         context.sendBroadcast(intent);
 
     }
-
 
 
 }

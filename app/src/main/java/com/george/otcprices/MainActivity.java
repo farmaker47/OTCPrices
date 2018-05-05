@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -21,12 +22,13 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +38,9 @@ import com.george.otcprices.data.OtcConract;
 import com.george.otcprices.utils.DownloadDBFunction;
 import com.george.otcprices.utils.MedicineJobScheduler;
 import com.george.otcprices.utils.OtcDBService;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,7 +48,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private OTCMainDBHelper otcMainDBHelper;
     private SQLiteDatabase mDb;
@@ -54,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private MainRecyclerViewAdapter mainRecyclerViewAdapter;
     private SearchView searchView;
     private static final String SEARCH_KEY = "search_key";
-    private String mSearchString,mDownLoadString;
+    private String mSearchString, mDownLoadString;
 
     private BroadcastReceiver mBroadcastReceiver;
     private IntentFilter mFilter;
@@ -63,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String BUNDLE_RECYCLER_LAYOUT = "recycler_layout";
 
     private static final int NOTIFICATION_ID = 4000;
+
+    private AdView mAdView;
 
     @BindView(R.id.recyclerMainMedicine)
     RecyclerView recyclerViewMain;
@@ -158,6 +165,42 @@ public class MainActivity extends AppCompatActivity {
 
         //Schedule download of fresh DB
         MedicineJobScheduler.scheduleFirebaseJobDispatcherSync(this);
+
+        //Ads by Admob
+        MobileAds.initialize(this,
+                "ca-app-pub-3940256099942544~3347511713");
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+        //set up shared preferences
+        setupSharedPreferences();
+    }
+
+    private void setupSharedPreferences() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String margin = sharedPreferences.getString(getString(R.string.pref_margin_key),
+                getString(R.string.pref_margin_default));
+        Log.e("margin", margin);
+
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        Log.e("marginAfter", "change");
+        if (key.equals("margin_key")) {
+            String margin = sharedPreferences.getString("margin_key", getString(R.string.pref_margin_default));
+            Log.e("marginAfter", margin);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -262,7 +305,7 @@ public class MainActivity extends AppCompatActivity {
                 layoutManager.onRestoreInstanceState(savedRecyclerLayoutState);
             }
 
-            if(mDownLoadString.equals(getString(R.string.new_db))){
+            if (mDownLoadString.equals(getString(R.string.new_db))) {
                 showNotification();
                 //reset the name of string
                 mDownLoadString = getString(R.string.old_db);
@@ -278,11 +321,6 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private void showNotification() {
-
-        /*String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Pictures/2.jpeg";
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-        Bitmap bitmap = BitmapFactory.decodeFile(path, options); //This gets the image*/
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
@@ -341,7 +379,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private void searchViewQuery(){
+    private void searchViewQuery() {
         //focus the SearchView
         if (mSearchString != null && !mSearchString.isEmpty()) {
             searchView.setIconified(true);
@@ -363,7 +401,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -373,6 +410,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent startSettingsActivity = new Intent(this, SettingsActivity.class);
+            startActivity(startSettingsActivity);
             return true;
         }
 
@@ -400,6 +439,7 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onBackPressed();
     }
+
 
     private class OtcMedicineBroadcast extends BroadcastReceiver {
         @Override
