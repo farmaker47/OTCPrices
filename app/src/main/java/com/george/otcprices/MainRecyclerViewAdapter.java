@@ -44,6 +44,9 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
         MedicinesObject medicinesObject = medicinesArrayFiltered.get(position);
 
+        //to be used with swipe to delete method
+        String idOfMedicine = medicinesObject.getNumberPosition();
+
         holder.textTitle.setText(medicinesObject.getName());
         holder.textPrice.setText(medicinesObject.getPrice());
 
@@ -52,6 +55,9 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         byte[] image = medicinesObject.getBlob();
         Bitmap bitmap = getImage(image);
         holder.imageMain.setImageBitmap(bitmap);
+        //setting tag
+        int id = Integer.parseInt(idOfMedicine);
+        holder.itemView.setTag(id);
 
     }
 

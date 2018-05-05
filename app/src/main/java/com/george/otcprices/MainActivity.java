@@ -1,5 +1,7 @@
 package com.george.otcprices;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.SearchManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,21 +9,23 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.CursorLoader;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +33,7 @@ import android.view.View;
 import com.george.otcprices.data.OTCMainDBHelper;
 import com.george.otcprices.data.OtcConract;
 import com.george.otcprices.utils.DownloadDBFunction;
+import com.george.otcprices.utils.MedicineJobScheduler;
 import com.george.otcprices.utils.OtcDBService;
 
 import java.io.IOException;
@@ -48,13 +53,15 @@ public class MainActivity extends AppCompatActivity {
     private MainRecyclerViewAdapter mainRecyclerViewAdapter;
     private SearchView searchView;
     private static final String SEARCH_KEY = "search_key";
-    private String mSearchString;
+    private String mSearchString,mDownLoadString;
 
     private BroadcastReceiver mBroadcastReceiver;
     private IntentFilter mFilter;
 
     private Parcelable savedRecyclerLayoutState;
     private static final String BUNDLE_RECYCLER_LAYOUT = "recycler_layout";
+
+    private static final int NOTIFICATION_ID = 4000;
 
     @BindView(R.id.recyclerMainMedicine)
     RecyclerView recyclerViewMain;
@@ -65,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+
+        mDownLoadString = getString(R.string.old_db);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -113,6 +122,41 @@ public class MainActivity extends AppCompatActivity {
         mBroadcastReceiver = new OtcMedicineBroadcast();
         mFilter = new IntentFilter();
         mFilter.addAction(DownloadDBFunction.NUMBER_OF_FIREBASE_RECEIVER);
+
+        /*
+         Add a touch helper to the RecyclerView to recognize when a user swipes to delete an item.
+         An ItemTouchHelper enables touch behavior (like swipe and move) on each ViewHolder,
+         and uses callbacks to signal when a user is performing these actions.
+         */
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            // Called when a user swipes left or right on a ViewHolder
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                // Retrieve the id of the medicine to delete
+                int id = (int) viewHolder.itemView.getTag();
+
+                // Build appropriate uri with String row id appended
+                String stringId = Integer.toString(id);
+                Uri uri = OtcConract.MainRecycler.CONTENT_URI_MAIN;
+                uri = uri.buildUpon().appendPath(stringId).build();
+
+                // Delete a single row of data using a ContentResolver
+                getContentResolver().delete(uri, null, null);
+
+                // Restart the loader to re-query for all medicines after a deletion
+                mainRecyclerViewAdapter.setMedicineDataAfterDownload();
+                getSupportLoaderManager().restartLoader(DATABASE_LOADER, null, mLoaderDatabase);
+
+            }
+        }).attachToRecyclerView(recyclerViewMain);
+
+        //Schedule download of fresh DB
+        MedicineJobScheduler.scheduleFirebaseJobDispatcherSync(this);
     }
 
     @Override
@@ -203,7 +247,8 @@ public class MainActivity extends AppCompatActivity {
                 while (!data.isAfterLast()) {
                     medicineList.add(new MedicinesObject(data.getString(data.getColumnIndex(OtcConract.MainRecycler.MAIN_NAME)),
                             data.getString(data.getColumnIndex(OtcConract.MainRecycler.MAIN_PRICE)),
-                            data.getBlob(data.getColumnIndex(OtcConract.MainRecycler.MAIN_IMAGE))));
+                            data.getBlob(data.getColumnIndex(OtcConract.MainRecycler.MAIN_IMAGE)),
+                            data.getString(data.getColumnIndex(OtcConract.MainRecycler._ID))));
                     data.moveToNext();
                 }
                 data.close();
@@ -216,9 +261,11 @@ public class MainActivity extends AppCompatActivity {
                 layoutManager.onRestoreInstanceState(savedRecyclerLayoutState);
             }
 
-
-            //call below again because there is a delay between query filter and cursor loader results
-            /*searchViewQuery();*/
+            if(mDownLoadString.equals(getString(R.string.new_db))){
+                showNotification();
+                //reset the name of string
+                mDownLoadString = getString(R.string.old_db);
+            }
 
         }
 
@@ -228,6 +275,35 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
+    private void showNotification() {
+
+        /*String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Pictures/2.jpeg";
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        Bitmap bitmap = BitmapFactory.decodeFile(path, options); //This gets the image*/
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                .setSmallIcon(R.drawable.ic_file_download)
+                .setContentTitle(getString(R.string.notification))
+                .setContentText(getString(R.string.newDBDownloadCompleted))
+                .setAutoCancel(true);
+
+        Intent detailIntentForToday = new Intent(this, MainActivity.class);
+
+        TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(this);
+        taskStackBuilder.addNextIntentWithParentStack(detailIntentForToday);
+        PendingIntent resultPendingIntent = taskStackBuilder
+                .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        notificationBuilder.setContentIntent(resultPendingIntent);
+
+        NotificationManager notificationManager = (NotificationManager)
+                getSystemService(Context.NOTIFICATION_SERVICE);
+
+        notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -334,10 +410,13 @@ public class MainActivity extends AppCompatActivity {
                 Loader<String> internetLoader = loaderManager.getLoader(DATABASE_LOADER);
                 if (internetLoader == null) {
                     loaderManager.initLoader(DATABASE_LOADER, null, mLoaderDatabase);
+                    mDownLoadString = getString(R.string.new_db);
                 } else {
                     //after downloading the fresh db we first clear the list and then we restart the loader
                     mainRecyclerViewAdapter.setMedicineDataAfterDownload();
                     loaderManager.restartLoader(DATABASE_LOADER, null, mLoaderDatabase);
+                    //we give a new name of the string so in on load finish to throw a notification
+                    mDownLoadString = getString(R.string.new_db);
 
                 }
             }

@@ -10,4 +10,8 @@
     <string name="unknown">Unkown uri:</string>
     <string name="db_firebase_path"><![CDATA[https://firebasestorage.googleapis.com/v0/b/snow-1557b.appspot.com/o/otcData.db?alt=media&token=e3d344fe-cfe1-4d8c-8d78-ab99c8eb347a]]></string>
     <string name="action_manual_download">Download Database</string>
+    <string name="old_db">old_db</string>
+    <string name="new_db">new_db</string>
+    <string name="notification">OTCPrices</string>
+    <string name="newDBDownloadCompleted">Download of new database completed</string>
 </resources>
