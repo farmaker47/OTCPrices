@@ -49,7 +49,8 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener,
+        MainRecyclerViewAdapter.MedicinesClickItemListener {
 
     private OTCMainDBHelper otcMainDBHelper;
     private SQLiteDatabase mDb;
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         recyclerViewMain.setLayoutManager(layoutManager);
 
         medicineList = new ArrayList<>();
-        mainRecyclerViewAdapter = new MainRecyclerViewAdapter(this, medicineList);
+        mainRecyclerViewAdapter = new MainRecyclerViewAdapter(this, medicineList,this);
         recyclerViewMain.setAdapter(mainRecyclerViewAdapter);
 
         //restore recycler view at same position
@@ -172,8 +173,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         searchViewDeletion();
                     }
                 }, 30);
-
-
 
             }
         }).attachToRecyclerView(recyclerViewMain);
@@ -467,6 +466,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             return;
         }
         super.onBackPressed();
+    }
+
+    @Override
+    public void onListItemClick(int position) {
+        Log.e("tag",String.valueOf(position));
     }
 
 

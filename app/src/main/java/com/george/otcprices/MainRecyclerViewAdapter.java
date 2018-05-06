@@ -27,12 +27,18 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
     private double marginInt, totalMargin, marginObjectInt;
     private String margin, marginObject;
+    private MedicinesClickItemListener medicinesClickItemListener;
 
-    public MainRecyclerViewAdapter(Context context, ArrayList<MedicinesObject> list) {
+    public MainRecyclerViewAdapter(Context context, ArrayList<MedicinesObject> list, MedicinesClickItemListener listener) {
         mContext = context;
         medicinesArray = list;
         medicinesArrayFiltered = list;
         filteredList = new ArrayList<>();
+        medicinesClickItemListener = listener;
+    }
+
+    public interface MedicinesClickItemListener {
+        void onListItemClick(int itemIndex);
     }
 
 
@@ -128,7 +134,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         };
     }
 
-    public class MainViewHolder extends RecyclerView.ViewHolder {
+    public class MainViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.imageMainRecycler)
         ImageView imageMain;
@@ -141,7 +147,15 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             super(itemView);
 
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
+        }
 
+        @Override
+        public void onClick(View view) {
+
+            //instead of passing the position we pass the tag which is the _id of the item inside db
+            //so we can use it later for deleting while querying and at second detail screen
+            medicinesClickItemListener.onListItemClick((int)itemView.getTag());
         }
     }
 
