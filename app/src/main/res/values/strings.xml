@@ -18,4 +18,7 @@
     <string name="pref_margin_default">35</string>
     <string name="pref_margin_key">margin_key</string>
     <string name="pref_margin_label">Select margin</string>
+    <string name="euro_symbol">€</string>
+    <string name="nurofen">Nurofen caps</string>
+    <string name="random_price">5.4€</string>
 </resources>

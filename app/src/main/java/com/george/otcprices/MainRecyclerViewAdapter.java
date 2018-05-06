@@ -67,8 +67,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         totalMargin = marginObjectInt * ((100 + marginInt) / 100) * 1.24;
         totalMargin = Math.round(totalMargin * 100);
         totalMargin = totalMargin / 100;
-        holder.textPrice.setText(String.valueOf(totalMargin));
-
+        holder.textPrice.setText(String.valueOf(totalMargin) + mContext.getString(R.string.euro_symbol));
 
         //Get image from database
         byte[] image = medicinesObject.getBlob();

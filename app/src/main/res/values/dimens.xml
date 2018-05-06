@@ -1,3 +1,6 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="recycler_margin_bottom">50dp</dimen>
+    <dimen name="imageViewDimen">100dp</dimen>
+    <dimen name="viewMargin">8dp</dimen>
 </resources>
