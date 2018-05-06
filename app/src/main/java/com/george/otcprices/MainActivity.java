@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private MainRecyclerViewAdapter mainRecyclerViewAdapter;
     private SearchView searchView;
     private static final String SEARCH_KEY = "search_key";
+    public static final String ID_TO_PASS = "id_to_pass";
     private String mSearchString, mDownLoadString, mSearchDeletion;
 
     private BroadcastReceiver mBroadcastReceiver;
@@ -471,6 +472,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     @Override
     public void onListItemClick(int position) {
         Log.e("tag",String.valueOf(position));
+        Intent intent = new Intent(MainActivity.this,DetailsActivity.class);
+        intent.putExtra(ID_TO_PASS,String.valueOf(position));
+        startActivity(intent);
     }
 
 

@@ -3,4 +3,6 @@
     <dimen name="recycler_margin_bottom">50dp</dimen>
     <dimen name="imageViewDimen">100dp</dimen>
     <dimen name="viewMargin">8dp</dimen>
+    <dimen name="app_bar_height">240dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>
