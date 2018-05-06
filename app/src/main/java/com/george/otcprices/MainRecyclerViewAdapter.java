@@ -23,8 +23,8 @@ import butterknife.ButterKnife;
 public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerViewAdapter.MainViewHolder> implements Filterable {
 
     private Context mContext;
-    private ArrayList<MedicinesObject> medicinesArray;
-    private ArrayList<MedicinesObject> medicinesArrayFiltered;
+    private ArrayList<MedicinesObject> medicinesArray,medicinesArrayFiltered,filteredList;
+
     private double marginInt, totalMargin, marginObjectInt;
     private String margin, marginObject;
 
@@ -32,6 +32,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         mContext = context;
         medicinesArray = list;
         medicinesArrayFiltered = list;
+        filteredList = new ArrayList<>();
     }
 
 
@@ -99,7 +100,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
                     medicinesArrayFiltered = medicinesArray;
                     Log.e("Empty", "String");
                 } else {
-                    ArrayList<MedicinesObject> filteredList = new ArrayList<>();
+                    filteredList = new ArrayList<>();
                     for (MedicinesObject row : medicinesArray) {
                         // name match condition. this might differ depending on your requirement
                         // here we are looking for name or phone number match
@@ -109,6 +110,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
                     }
 
                     medicinesArrayFiltered = filteredList;
+                    Log.e("Full", String.valueOf(filteredList.size()));
                 }
 
                 FilterResults filterResults = new FilterResults();
@@ -120,7 +122,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
                 medicinesArrayFiltered = (ArrayList<MedicinesObject>) filterResults.values;
-                Log.e("publishResults", "String");
+                Log.e("publishResults", String.valueOf(medicinesArrayFiltered.size()));
                 notifyDataSetChanged();
             }
         };
@@ -153,6 +155,8 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
     public void setMedicineDataAfterDownload() {
         medicinesArrayFiltered.clear();
+        medicinesArray.clear();
+        filteredList.clear();
     }
 
     // convert from byte array to bitmap

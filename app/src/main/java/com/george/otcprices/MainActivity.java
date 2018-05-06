@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private MainRecyclerViewAdapter mainRecyclerViewAdapter;
     private SearchView searchView;
     private static final String SEARCH_KEY = "search_key";
-    private String mSearchString, mDownLoadString;
+    private String mSearchString, mDownLoadString, mSearchDeletion;
 
     private BroadcastReceiver mBroadcastReceiver;
     private IntentFilter mFilter;
@@ -158,7 +159,21 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
                 // Restart the loader to re-query for all medicines after a deletion
                 mainRecyclerViewAdapter.setMedicineDataAfterDownload();
+
+                mSearchDeletion = searchView.getQuery().toString();
+                Log.e("deletionString",mSearchDeletion);
+
                 getSupportLoaderManager().restartLoader(DATABASE_LOADER, null, mLoaderDatabase);
+
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        searchViewDeletion();
+                    }
+                }, 30);
+
+
 
             }
         }).attachToRecyclerView(recyclerViewMain);
@@ -192,10 +207,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         mainRecyclerViewAdapter.setMedicineDataAfterDownload();
         getSupportLoaderManager().restartLoader(DATABASE_LOADER, null, mLoaderDatabase);
 
-        if (key.equals("margin_key")) {
+        /*if (key.equals("margin_key")) {
             String margin = sharedPreferences.getString("margin_key", getString(R.string.pref_margin_default));
             Log.e("marginAfter", margin);
-        }
+        }*/
     }
 
     @Override
@@ -365,6 +380,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             public boolean onQueryTextSubmit(String query) {
                 // filter recycler view when query submitted
                 mainRecyclerViewAdapter.getFilter().filter(query);
+                Log.e("Submit", "String");
+                mSearchDeletion = query;
                 return false;
             }
 
@@ -372,6 +389,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             public boolean onQueryTextChange(String query) {
                 // filter recycler view when text is changed
                 mainRecyclerViewAdapter.getFilter().filter(query);
+                Log.e("Change", "String");
                 return false;
             }
         });
@@ -399,6 +417,15 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     searchView.setQuery(mSearchString, true);
                 }
             }, 50);*/
+        }
+    }
+
+    private void searchViewDeletion(){
+        if (mSearchDeletion != null && !mSearchDeletion.isEmpty()) {
+            searchView.setIconified(true);
+            searchView.onActionViewExpanded();
+            searchView.setQuery(mSearchDeletion, true);
+            searchView.setFocusable(true);
         }
     }
 
