@@ -38,7 +38,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     }
 
     public interface MedicinesClickItemListener {
-        void onListItemClick(int itemIndex);
+        void onListItemClick(int itemIndex,String string);
     }
 
 
@@ -155,7 +155,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
             //instead of passing the position we pass the tag which is the _id of the item inside db
             //so we can use it later for deleting while querying and at second detail screen
-            medicinesClickItemListener.onListItemClick((int)itemView.getTag());
+            medicinesClickItemListener.onListItemClick((int)itemView.getTag(),textTitle.getText().toString());
         }
     }
 

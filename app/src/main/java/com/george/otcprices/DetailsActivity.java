@@ -10,6 +10,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -24,9 +26,11 @@ import butterknife.ButterKnife;
 
 public class DetailsActivity extends AppCompatActivity {
 
-    private String tagFromMain;
+    private String tagFromMain, nameToSet;
     private static final int ONE_MEDICINE_LOADER = 47;
     private static final String QUERY_BUNDLE = "query_bundle";
+    private ActionBar actionBar;
+    private NestedScrollView mScrollView;
     @BindView(R.id.photoMedicine)
     ImageView medicineImage;
     @BindView(R.id.infoForMedicine)
@@ -43,8 +47,13 @@ public class DetailsActivity extends AppCompatActivity {
             tagFromMain = intent.getStringExtra(MainActivity.ID_TO_PASS);
             Log.e("Details", tagFromMain);
         }
+        if (intent.hasExtra(MainActivity.NAME_TO_PASS)) {
+            nameToSet = intent.getStringExtra(MainActivity.NAME_TO_PASS);
+        }
+        mScrollView = findViewById(R.id.nestedScrollText);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -67,6 +76,29 @@ public class DetailsActivity extends AppCompatActivity {
         } else {
             loaderManager.restartLoader(ONE_MEDICINE_LOADER, queryBundle, mLoaderMedicine);
         }
+
+        setTitle(nameToSet);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putIntArray("ARTICLE_SCROLL_POSITION",
+                new int[]{mScrollView.getScrollX(), mScrollView.getScrollY()});
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        final int[] position = savedInstanceState.getIntArray("ARTICLE_SCROLL_POSITION");
+        if (position != null)
+            mScrollView.post(new Runnable() {
+                public void run() {
+                    mScrollView.scrollTo(position[0], position[1]);
+                }
+            });
     }
 
     private LoaderManager.LoaderCallbacks mLoaderMedicine = new LoaderManager.LoaderCallbacks<Cursor>() {
@@ -74,7 +106,7 @@ public class DetailsActivity extends AppCompatActivity {
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
             String query = args.getString(QUERY_BUNDLE);
-            Log.e("queryBundle",query);
+            Log.e("queryBundle", query);
 
             return new CursorLoader(DetailsActivity.this, OtcConract.MainRecycler.CONTENT_URI_MAIN.buildUpon().appendPath(query).build(), null, null, null, null);
         }
@@ -84,6 +116,8 @@ public class DetailsActivity extends AppCompatActivity {
             data.moveToFirst();
             String text = data.getString(data.getColumnIndex(OtcConract.MainRecycler.MAIN_INFORMATION));
             medicineTextInfo.setText(text);
+
+            String name = data.getString(data.getColumnIndex(OtcConract.MainRecycler.MAIN_NAME));
 
             byte[] image = data.getBlob(data.getColumnIndex(OtcConract.MainRecycler.MAIN_IMAGE));
             Bitmap bitmap = getImage(image);
