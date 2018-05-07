@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,8 +15,13 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,7 +62,7 @@ public class DetailsActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,6 +84,38 @@ public class DetailsActivity extends AppCompatActivity {
         }
 
         setTitle(nameToSet);
+
+        //transition
+        setupWindowAnimations();
+
+    }
+
+    private void setupWindowAnimations() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            /*Slide slide = new Slide();
+            slide.setDuration(1000);
+            getWindow().setEnterTransition(slide);*/
+            Slide slide = new Slide(Gravity.BOTTOM);
+            slide.addTarget(R.id.nestedScrollText);
+            Log.e("transition","trans");
+            slide.setInterpolator(AnimationUtils.loadInterpolator(this, android.R.interpolator.bounce));
+            slide.setDuration(10000);
+            getWindow().setEnterTransition(slide);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Slide slide = new Slide(Gravity.BOTTOM);
+            slide.addTarget(R.id.nestedScrollText);
+            Log.e("transition","trans");
+            slide.setInterpolator(AnimationUtils.loadInterpolator(this, android.R.interpolator.bounce));
+            slide.setDuration(1000);
+            getWindow().setEnterTransition(slide);
+        }*/
     }
 
     @Override

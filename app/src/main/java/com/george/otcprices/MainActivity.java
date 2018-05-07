@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         recyclerViewMain.setLayoutManager(layoutManager);
 
         medicineList = new ArrayList<>();
-        mainRecyclerViewAdapter = new MainRecyclerViewAdapter(this, medicineList,this);
+        mainRecyclerViewAdapter = new MainRecyclerViewAdapter(this, medicineList, this);
         recyclerViewMain.setAdapter(mainRecyclerViewAdapter);
 
         //restore recycler view at same position
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 mainRecyclerViewAdapter.setMedicineDataAfterDownload();
 
                 mSearchDeletion = searchView.getQuery().toString();
-                Log.e("deletionString",mSearchDeletion);
+                Log.e("deletionString", mSearchDeletion);
 
                 getSupportLoaderManager().restartLoader(DATABASE_LOADER, null, mLoaderDatabase);
 
@@ -421,7 +421,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
     }
 
-    private void searchViewDeletion(){
+    private void searchViewDeletion() {
         if (mSearchDeletion != null && !mSearchDeletion.isEmpty()) {
             searchView.setIconified(true);
             searchView.onActionViewExpanded();
@@ -471,10 +471,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     @Override
-    public void onListItemClick(int position,String name) {
-        Intent intent = new Intent(MainActivity.this,DetailsActivity.class);
-        intent.putExtra(ID_TO_PASS,String.valueOf(position));
-        intent.putExtra(NAME_TO_PASS,name);
+    public void onListItemClick(int position, String name) {
+        Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+        intent.putExtra(ID_TO_PASS, String.valueOf(position));
+        intent.putExtra(NAME_TO_PASS, name);
         startActivity(intent);
     }
 
