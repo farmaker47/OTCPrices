@@ -413,7 +413,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             searchView.setIconified(true);
             searchView.onActionViewExpanded();
             searchView.setQuery(mSearchString, true);
-            searchView.setFocusable(true);
+            searchView.setFocusable(false);
 
             /*mainRecyclerViewAdapter.setMedicineData(medicineList);*/
 
@@ -433,7 +433,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             searchView.setIconified(true);
             searchView.onActionViewExpanded();
             searchView.setQuery(mSearchDeletion, true);
-            searchView.setFocusable(true);
+            searchView.setFocusable(false);
         }
     }
 
