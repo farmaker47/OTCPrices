@@ -93,29 +93,11 @@ public class DetailsActivity extends AppCompatActivity {
     private void setupWindowAnimations() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            /*Slide slide = new Slide();
-            slide.setDuration(1000);
-            getWindow().setEnterTransition(slide);*/
-            Slide slide = new Slide(Gravity.BOTTOM);
-            slide.addTarget(R.id.nestedScrollText);
-            Log.e("transition","trans");
-            slide.setInterpolator(AnimationUtils.loadInterpolator(this, android.R.interpolator.bounce));
-            slide.setDuration(10000);
+            Slide slide = new Slide(Gravity.RIGHT);
+            slide.setInterpolator(AnimationUtils.loadInterpolator(this, android.R.interpolator.linear_out_slow_in));
+            slide.setDuration(300);
             getWindow().setEnterTransition(slide);
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Slide slide = new Slide(Gravity.BOTTOM);
-            slide.addTarget(R.id.nestedScrollText);
-            Log.e("transition","trans");
-            slide.setInterpolator(AnimationUtils.loadInterpolator(this, android.R.interpolator.bounce));
-            slide.setDuration(1000);
-            getWindow().setEnterTransition(slide);
-        }*/
     }
 
     @Override

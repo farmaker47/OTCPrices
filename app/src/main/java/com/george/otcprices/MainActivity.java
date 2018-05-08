@@ -1,5 +1,6 @@
 package com.george.otcprices;
 
+import android.app.ActivityOptions;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.SearchManager;
@@ -475,7 +476,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
         intent.putExtra(ID_TO_PASS, String.valueOf(position));
         intent.putExtra(NAME_TO_PASS, name);
-        startActivity(intent);
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
 
