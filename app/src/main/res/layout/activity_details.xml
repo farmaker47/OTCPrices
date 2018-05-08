@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    android:id="@+id/coordinatorMedicine"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorMedicine"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -36,6 +35,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/scrim"/>
 
             </FrameLayout>
 
@@ -59,5 +62,14 @@
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@android:drawable/ic_dialog_email" />
+
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adViewDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom|center"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/advertisment" />
 
 </android.support.design.widget.CoordinatorLayout>

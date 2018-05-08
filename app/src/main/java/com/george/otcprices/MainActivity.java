@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -30,10 +31,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 
 import com.george.otcprices.data.OTCMainDBHelper;
 import com.george.otcprices.data.OtcConract;
@@ -64,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private static final String SEARCH_KEY = "search_key";
     public static final String ID_TO_PASS = "id_to_pass";
     public static final String NAME_TO_PASS = "name_to_pass";
+    public static final String INTERNET_TO_PASS = "internet_to_pass";
     private String mSearchString, mDownLoadString, mSearchDeletion;
 
     private BroadcastReceiver mBroadcastReceiver;
@@ -311,7 +316,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     medicineList.add(new MedicinesObject(data.getString(data.getColumnIndex(OtcConract.MainRecycler.MAIN_NAME)),
                             data.getString(data.getColumnIndex(OtcConract.MainRecycler.MAIN_PRICE)),
                             data.getBlob(data.getColumnIndex(OtcConract.MainRecycler.MAIN_IMAGE)),
-                            data.getString(data.getColumnIndex(OtcConract.MainRecycler._ID))));
+                            data.getString(data.getColumnIndex(OtcConract.MainRecycler._ID)),
+                            data.getString(data.getColumnIndex(OtcConract.MainRecycler.MAIN_INTERNET))));
                     data.moveToNext();
                 }
                 data.close();
@@ -472,11 +478,17 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     @Override
-    public void onListItemClick(int position, String name) {
+    public void onListItemClick(int position, String name,String internet) {
         Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
         intent.putExtra(ID_TO_PASS, String.valueOf(position));
         intent.putExtra(NAME_TO_PASS, name);
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        intent.putExtra(INTERNET_TO_PASS,internet);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        }else{
+            startActivity(intent);
+        }
     }
 
 

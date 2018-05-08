@@ -5,14 +5,15 @@ package com.george.otcprices;
  */
 
 class MedicinesObject {
-    String nameMedicine, priceMedicine,numberPosition;
+    String nameMedicine, priceMedicine,numberPosition,internetText;
     byte[] blobMedicine;
 
-    public MedicinesObject(String name, String price, byte[] blob, String number) {
+    public MedicinesObject(String name, String price, byte[] blob, String number,String internet) {
         nameMedicine = name;
         priceMedicine = price;
         blobMedicine = blob;
         numberPosition = number;
+        internetText = internet;
     }
 
 
@@ -30,5 +31,8 @@ class MedicinesObject {
 
     public String getNumberPosition(){
         return numberPosition;
+    }
+    public String getInternetText(){
+        return internetText;
     }
 }

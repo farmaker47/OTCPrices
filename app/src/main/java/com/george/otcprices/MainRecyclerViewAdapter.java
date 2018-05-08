@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerViewAdapter.MainViewHolder> implements Filterable {
 
     private Context mContext;
-    private ArrayList<MedicinesObject> medicinesArray,medicinesArrayFiltered,filteredList;
+    private ArrayList<MedicinesObject> medicinesArray, medicinesArrayFiltered, filteredList;
 
     private double marginInt, totalMargin, marginObjectInt;
     private String margin, marginObject;
@@ -38,7 +38,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     }
 
     public interface MedicinesClickItemListener {
-        void onListItemClick(int itemIndex,String string);
+        void onListItemClick(int itemIndex, String string,String string2);
     }
 
 
@@ -59,6 +59,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         String idOfMedicine = medicinesObject.getNumberPosition();
 
         holder.textTitle.setText(medicinesObject.getName());
+        holder.internetText.setText(medicinesObject.getInternetText());
 
         //getting the margin everytime the app starts or resumes in case user has changed margin
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -142,6 +143,8 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         TextView textTitle;
         @BindView(R.id.textMainPrice)
         TextView textPrice;
+        @BindView(R.id.internetDummy)
+        TextView internetText;
 
         public MainViewHolder(View itemView) {
             super(itemView);
@@ -155,7 +158,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
             //instead of passing the position we pass the tag which is the _id of the item inside db
             //so we can use it later for deleting while querying and at second detail screen
-            medicinesClickItemListener.onListItemClick((int)itemView.getTag(),textTitle.getText().toString());
+            medicinesClickItemListener.onListItemClick((int) itemView.getTag(), textTitle.getText().toString(), internetText.getText().toString());
         }
     }
 

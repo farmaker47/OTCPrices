@@ -16,8 +16,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -26,17 +24,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.george.otcprices.data.OtcConract;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DetailsActivity extends AppCompatActivity {
 
-    private String tagFromMain, nameToSet;
+    private String tagFromMain, nameToSet,internetToSet;
     private static final int ONE_MEDICINE_LOADER = 47;
     private static final String QUERY_BUNDLE = "query_bundle";
     private ActionBar actionBar;
     private NestedScrollView mScrollView;
+    private AdView mAdView;
+
+
     @BindView(R.id.photoMedicine)
     ImageView medicineImage;
     @BindView(R.id.infoForMedicine)
@@ -51,10 +55,13 @@ public class DetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent.hasExtra(MainActivity.ID_TO_PASS)) {
             tagFromMain = intent.getStringExtra(MainActivity.ID_TO_PASS);
-            Log.e("Details", tagFromMain);
         }
         if (intent.hasExtra(MainActivity.NAME_TO_PASS)) {
             nameToSet = intent.getStringExtra(MainActivity.NAME_TO_PASS);
+        }
+        if (intent.hasExtra(MainActivity.INTERNET_TO_PASS)) {
+            internetToSet = intent.getStringExtra(MainActivity.INTERNET_TO_PASS);
+            Log.e("Details", internetToSet);
         }
         mScrollView = findViewById(R.id.nestedScrollText);
 
@@ -87,6 +94,14 @@ public class DetailsActivity extends AppCompatActivity {
 
         //transition
         setupWindowAnimations();
+
+        //Ads by Admob
+        MobileAds.initialize(this,
+                "ca-app-pub-3940256099942544~3347511713");
+
+        mAdView = findViewById(R.id.adViewDetails);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
     }
 

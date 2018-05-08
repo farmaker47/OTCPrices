@@ -19,6 +19,12 @@
             android:layout_width="@dimen/imageViewDimen"
             android:layout_height="@dimen/imageViewDimen" />
 
+        <TextView
+            android:id="@+id/internetDummy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
