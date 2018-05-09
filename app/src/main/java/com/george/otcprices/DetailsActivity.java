@@ -7,8 +7,8 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.NestedScrollView;
@@ -33,7 +33,7 @@ import butterknife.ButterKnife;
 
 public class DetailsActivity extends AppCompatActivity {
 
-    private String tagFromMain, nameToSet,internetToSet;
+    private String tagFromMain, nameToSet, internetToSet;
     private static final int ONE_MEDICINE_LOADER = 47;
     private static final String QUERY_BUNDLE = "query_bundle";
     private ActionBar actionBar;
@@ -73,8 +73,10 @@ public class DetailsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(DetailsActivity.this)
+                        .setType("text/plain")
+                        .setText(getString(R.string.read_info) + " " + internetToSet)
+                        .getIntent(), getString(R.string.action_share)));
             }
         });
 
@@ -157,6 +159,7 @@ public class DetailsActivity extends AppCompatActivity {
             byte[] image = data.getBlob(data.getColumnIndex(OtcConract.MainRecycler.MAIN_IMAGE));
             Bitmap bitmap = getImage(image);
             medicineImage.setImageBitmap(bitmap);
+            /*Glide.with(DetailsActivity.this).load(image).into(medicineImage);*/
         }
 
         @Override

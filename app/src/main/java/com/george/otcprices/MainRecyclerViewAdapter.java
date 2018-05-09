@@ -38,7 +38,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     }
 
     public interface MedicinesClickItemListener {
-        void onListItemClick(int itemIndex, String string,String string2);
+        void onListItemClick(int itemIndex, String string, String string2);
     }
 
 
@@ -81,6 +81,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         byte[] image = medicinesObject.getBlob();
         Bitmap bitmap = getImage(image);
         holder.imageMain.setImageBitmap(bitmap);
+        /*Glide.with(mContext).load(image).into(holder.imageMain);*/
         //setting tag
         int id = Integer.parseInt(idOfMedicine);
         holder.itemView.setTag(id);

@@ -34,9 +34,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
-    //Picasso library to load images in imageViews
-    compile 'com.squareup.picasso:picasso:2.5.2'
-
     //Schedule job to download fresh DB reguarly
     compile 'com.firebase:firebase-jobdispatcher:0.8.5'
 
