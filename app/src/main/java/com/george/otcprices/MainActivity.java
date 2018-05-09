@@ -4,7 +4,9 @@ import android.app.ActivityOptions;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.SearchManager;
+import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -38,6 +40,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import com.george.otcprices.data.OTCMainDBHelper;
 import com.george.otcprices.data.OtcConract;
@@ -478,7 +481,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     @Override
-    public void onListItemClick(int position, String name,String internet) {
+    public void onListItemClick(int position, String name,String internet,String price) {
         Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
         intent.putExtra(ID_TO_PASS, String.valueOf(position));
         intent.putExtra(NAME_TO_PASS, name);
@@ -489,6 +492,19 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }else{
             startActivity(intent);
         }
+
+        updateWidgetWithIngredients(name,price);
+    }
+
+    private void updateWidgetWithIngredients(String name, String price) {
+
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+        int[] appWidgetId = appWidgetManager.getAppWidgetIds(new ComponentName(this, OtcWidgetProvider.class));
+
+        OtcWidgetProvider.updateWidgetWithInfo(MainActivity.this, appWidgetManager, name, price, appWidgetId);
+
+        Toast.makeText(MainActivity.this, name + " " + getString(R.string.isAdded), Toast.LENGTH_LONG).show();
+
     }
 
 

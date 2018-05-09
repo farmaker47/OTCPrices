@@ -24,4 +24,11 @@
     <string name="title_activity_details">DetailsActivity</string>
     <string name="action_share">Share</string>
     <string name="read_info">Read info about this medicine:</string>
+    <string name="appwidget_textName">Name</string>
+    <string name="appwidget_textPrice">Price</string>
+    <string name="add_widget">Add widget</string>
+    <string name="isAdded">is now added to widget</string>
+    <string name="nameDefault">Name</string>
+    <string name="priceDefault">Price</string>
+    <string name="medicine_info">Medicine Info</string>
 </resources>
