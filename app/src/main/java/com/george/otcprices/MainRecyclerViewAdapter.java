@@ -46,8 +46,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     public MainRecyclerViewAdapter.MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_main_recycler, parent, false);
 
-        MainViewHolder vh = new MainViewHolder(v);
-        return vh;
+        return new MainViewHolder(v);
     }
 
     @Override

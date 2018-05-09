@@ -34,7 +34,8 @@
                     android:id="@+id/photoMedicine"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="fitXY" />
+                    android:scaleType="fitXY"
+                    android:contentDescription="@string/medicineImage" />
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

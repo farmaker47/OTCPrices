@@ -7,7 +7,7 @@
     <string name="otc_prices_title">O.T.C Prices</string>
     <string name="search">search</string>
     <string name="search_hint">search</string>
-    <string name="unknown">Unkown uri:</string>
+    <string name="unknown">Unknown uri:</string>
     <string name="db_firebase_path"><![CDATA[https://firebasestorage.googleapis.com/v0/b/snow-1557b.appspot.com/o/otcData.db?alt=media&token=e3d344fe-cfe1-4d8c-8d78-ab99c8eb347a]]></string>
     <string name="action_manual_download">Download Database</string>
     <string name="old_db">old_db</string>
@@ -47,4 +47,5 @@
     Χρησιμοποιώντας την εφαρμογή θεωρείται οτι συμφωνείτε με τους παραπάνω όρους και τις οδηγίες.</string>
     <string name="instructionsOfUse">Instructions</string>
     <string name="numberBetween">Please select a number between 0 and 99</string>
+    <string name="medicineImage">medicine image</string>
 </resources>

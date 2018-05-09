@@ -17,7 +17,8 @@
         <ImageView
             android:id="@+id/imageMainRecycler"
             android:layout_width="@dimen/imageViewDimen"
-            android:layout_height="@dimen/imageViewDimen" />
+            android:layout_height="@dimen/imageViewDimen"
+            android:contentDescription="@string/medicineImage" />
 
         <TextView
             android:id="@+id/internetDummy"
