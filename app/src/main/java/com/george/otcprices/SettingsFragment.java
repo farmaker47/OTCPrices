@@ -51,7 +51,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
         // In this context, we're using the onPreferenceChange listener for checking whether the
         // size setting was set to a valid value.
 
-        Toast error = Toast.makeText(getContext(), "Please select a number between 0 and 99", Toast.LENGTH_SHORT);
+        Toast error = Toast.makeText(getContext(), getContext().getString(R.string.numberBetween), Toast.LENGTH_SHORT);
 
         // Double check that the preference is the size preference
         String sizeKey = getString(R.string.pref_margin_key);

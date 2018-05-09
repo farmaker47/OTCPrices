@@ -30,21 +30,26 @@ import com.google.android.gms.ads.MobileAds;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DetailsActivity extends AppCompatActivity {
 
     private String tagFromMain, nameToSet, internetToSet;
     private static final int ONE_MEDICINE_LOADER = 47;
     private static final String QUERY_BUNDLE = "query_bundle";
-    private ActionBar actionBar;
-    private NestedScrollView mScrollView;
-    private AdView mAdView;
-
 
     @BindView(R.id.photoMedicine)
     ImageView medicineImage;
     @BindView(R.id.infoForMedicine)
     TextView medicineTextInfo;
+    @BindView(R.id.nestedScrollText)
+    NestedScrollView mScrollView;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+    @BindView(R.id.adViewDetails)
+    AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,22 +68,9 @@ public class DetailsActivity extends AppCompatActivity {
             internetToSet = intent.getStringExtra(MainActivity.INTERNET_TO_PASS);
             Log.e("Details", internetToSet);
         }
-        mScrollView = findViewById(R.id.nestedScrollText);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(DetailsActivity.this)
-                        .setType("text/plain")
-                        .setText(getString(R.string.read_info) + " " + internetToSet)
-                        .getIntent(), getString(R.string.action_share)));
-            }
-        });
 
         //start loader to fetch medicine
         Bundle queryBundle = new Bundle();
@@ -101,7 +93,6 @@ public class DetailsActivity extends AppCompatActivity {
         MobileAds.initialize(this,
                 "ca-app-pub-3940256099942544~3347511713");
 
-        mAdView = findViewById(R.id.adViewDetails);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -115,6 +106,14 @@ public class DetailsActivity extends AppCompatActivity {
             slide.setDuration(300);
             getWindow().setEnterTransition(slide);
         }
+    }
+
+    @OnClick(R.id.fab)
+    public void clickFabToShare(View view) {
+        startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(DetailsActivity.this)
+                .setType("text/plain")
+                .setText(getString(R.string.read_info) + " " + internetToSet)
+                .getIntent(), getString(R.string.action_share)));
     }
 
     @Override

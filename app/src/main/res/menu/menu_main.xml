@@ -19,5 +19,10 @@
         android:orderInCategory="3"
         android:title="@string/action_manual_download"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_instructions"
+        android:orderInCategory="4"
+        android:title="@string/instructionsOfUse"
+        app:showAsAction="never" />
 
 </menu>

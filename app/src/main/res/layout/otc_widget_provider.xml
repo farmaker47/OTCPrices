@@ -14,28 +14,60 @@
         android:textSize="24sp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/appwidget_textName"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/appwidget_textName"
+            android:text="@string/appwidget_textNameDummy"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/appwidget_textName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            android:layout_weight="2"
             android:contentDescription="@string/appwidget_textName"
             android:text="@string/appwidget_textName"
             android:textColor="#ffffff"
             android:textSize="20sp"
             android:textStyle="bold" />
 
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
         <TextView
-            android:id="@+id/appwidget_textPrice"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/appwidget_textPrice"
+            android:text="@string/appwidget_textPriceDummy"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/appwidget_textPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            android:layout_weight="2"
             android:contentDescription="@string/appwidget_textPrice"
             android:text="@string/appwidget_textPrice"
             android:textColor="#ffffff"

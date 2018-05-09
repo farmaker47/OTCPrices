@@ -28,8 +28,8 @@ public class OtcWidgetProvider extends AppWidgetProvider {
             views.setTextViewText(R.id.appwidget_textName, name);
             views.setTextViewText(R.id.appwidget_textPrice, price);
         }else{
-            views.setTextViewText(R.id.appwidget_textName, context.getString(R.string.nameDefault));
-            views.setTextViewText(R.id.appwidget_textPrice, context.getString(R.string.priceDefault));
+            views.setTextViewText(R.id.appwidget_textName, context.getString(R.string.defaultInfo));
+            views.setTextViewText(R.id.appwidget_textPrice, context.getString(R.string.defaultInfo));
         }
 
 

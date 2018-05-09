@@ -2,7 +2,7 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialKeyguardLayout="@layout/otc_widget_provider"
     android:initialLayout="@layout/otc_widget_provider"
-    android:minHeight="100dp"
+    android:minHeight="80dp"
     android:minWidth="160dp"
     android:previewImage="@drawable/example_appwidget_preview"
     android:resizeMode="horizontal|vertical"

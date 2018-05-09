@@ -18,8 +18,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -33,13 +31,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.transition.Slide;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.george.otcprices.data.OTCMainDBHelper;
@@ -82,10 +76,12 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     private static final int NOTIFICATION_ID = 4000;
 
-    private AdView mAdView;
-
     @BindView(R.id.recyclerMainMedicine)
     RecyclerView recyclerViewMain;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.adView)
+    AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,17 +92,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         mDownLoadString = getString(R.string.old_db);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         try {
             otcMainDBHelper = new OTCMainDBHelper(this);
@@ -116,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         mDb = otcMainDBHelper.getReadableDatabase();
 
         setTitle(getString(R.string.otc_prices_title));
-
 
         recyclerViewMain.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -195,7 +180,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         MobileAds.initialize(this,
                 "ca-app-pub-3940256099942544~3347511713");
 
-        mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -465,6 +449,12 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             return true;
         }
 
+        if (id == R.id.action_instructions) {
+            Intent intent2 = new Intent(this, Instructions.class);
+            startActivity(intent2);
+            return true;
+        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -481,19 +471,19 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     @Override
-    public void onListItemClick(int position, String name,String internet,String price) {
+    public void onListItemClick(int position, String name, String internet, String price) {
         Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
         intent.putExtra(ID_TO_PASS, String.valueOf(position));
         intent.putExtra(NAME_TO_PASS, name);
-        intent.putExtra(INTERNET_TO_PASS,internet);
+        intent.putExtra(INTERNET_TO_PASS, internet);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-        }else{
+        } else {
             startActivity(intent);
         }
 
-        updateWidgetWithIngredients(name,price);
+        updateWidgetWithIngredients(name, price);
     }
 
     private void updateWidgetWithIngredients(String name, String price) {
