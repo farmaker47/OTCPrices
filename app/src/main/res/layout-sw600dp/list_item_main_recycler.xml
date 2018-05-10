@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?selectableItemBackground"
+    app:elevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageMainRecycler"
+            android:layout_width="@dimen/imageViewDimenTablet"
+            android:layout_height="@dimen/imageViewDimenTablet"
+            android:contentDescription="@string/medicineImage" />
+
+        <TextView
+            android:id="@+id/internetDummy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/viewMargin"
+            android:layout_marginStart="@dimen/viewMargin"
+            android:layout_marginTop="@dimen/viewMargin"
+            android:background="#ded9d9" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp">
+
+            <TextView
+                android:id="@+id/textMainTitle"
+                style="@style/textViewCard.Name.Tablet"
+                android:layout_weight="2"
+                android:textAlignment="center"
+                tools:text="@string/nurofen" />
+
+            <TextView
+                android:id="@+id/textMainPrice"
+                style="@style/textViewCard.Tablet"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                tools:text="@string/random_price" />
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>
+
