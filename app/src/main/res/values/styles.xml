@@ -31,5 +31,9 @@
         <item name="android:padding">4dp</item>
         <item name="android:textSize">16sp</item>
     </style>
+    <style name="textViewCard.Name">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 
 </resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">O.T.CPrices</string>
+    <string name="search">Αναζήτηση</string>
+    <string name="search_hint">Αναζήτηση</string>
+    <string name="error_copying_db">Παρουσιάστηκε σφάλμα κατα τη μεταφορά της βάσης</string>
+    <string name="action_settings">Ρυθμίσεις</string>
+    <string name="db_Not_exist">Η βάση δεν υπάρχει</string>
+    <string name="db_exist">Η βάση υπάρχει</string>
+    <string name="action_manual_download">Κατέβασμα βάσης</string>
+    <string name="newDBDownloadCompleted">Το κατέβασμα της βάσης ολοκληρώθηκε</string>
+    <string name="pref_margin_label">Επιλέξτε ποσοστό κέρδους</string>
+    <string name="action_share">Αποστολή</string>
+    <string name="read_info">Διαβάστε πληροφορίες για αυτό το φάρμακο</string>
+    <string name="appwidget_textName">Όνομα</string>
+    <string name="appwidget_textPrice">Τιμή</string>
+    <string name="isAdded">προστέθηκε στο widget</string>
+    <string name="medicine_info">Πληροφ. φαρμάκου</string>
+    <string name="appwidget_textNameDummy">Όνομα:</string>
+    <string name="appwidget_textPriceDummy">Τιμή:</string>
+    <string name="instructionsOfUse">Οδηγίες</string>
+    <string name="numberBetween">Παρακαλώ επιλέξτε κέρδος μεταξυ 0 και 99</string>
+    <string name="medicineImage">φωτο φαρμάκου</string>
+</resources>

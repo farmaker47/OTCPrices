@@ -4,47 +4,54 @@
     <string name="db_Not_exist">Database doesn\'t exist</string>
     <string name="db_exist">Database exists.</string>
     <string name="error_copying_db">Error copying database</string>
-    <string name="otc_prices_title">O.T.C Prices</string>
-    <string name="search">search</string>
-    <string name="search_hint">search</string>
-    <string name="unknown">Unknown uri:</string>
-    <string name="db_firebase_path"><![CDATA[https://firebasestorage.googleapis.com/v0/b/snow-1557b.appspot.com/o/otcData.db?alt=media&token=e3d344fe-cfe1-4d8c-8d78-ab99c8eb347a]]></string>
+    <string name="otc_prices_title" translatable="false">O.T.C Prices</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Search</string>
+    <string name="unknown" translatable="false">Unknown uri:</string>
+    <string name="db_firebase_path" translatable="false"><![CDATA[https://firebasestorage.googleapis.com/v0/b/snow-1557b.appspot.com/o/otcData.db?alt=media&token=e3d344fe-cfe1-4d8c-8d78-ab99c8eb347a]]></string>
     <string name="action_manual_download">Download Database</string>
-    <string name="old_db">old_db</string>
-    <string name="new_db">new_db</string>
-    <string name="notification">OTCPrices</string>
+    <string name="old_db" translatable="false">old_db</string>
+    <string name="new_db" translatable="false">new_db</string>
+    <string name="notification" translatable="false">OTCPrices</string>
     <string name="newDBDownloadCompleted">Download of new database completed</string>
-    <string name="advertisment">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="pref_margin_default">35</string>
-    <string name="pref_margin_key">margin_key</string>
+    <string name="advertisment" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="pref_margin_default" translatable="false">35</string>
+    <string name="pref_margin_key" translatable="false">margin_key</string>
     <string name="pref_margin_label">Select margin</string>
-    <string name="euro_symbol">€</string>
-    <string name="nurofen">Nurofen caps</string>
-    <string name="random_price">5.4€</string>
-    <string name="title_activity_details">DetailsActivity</string>
+    <string name="euro_symbol" translatable="false">€</string>
+    <string name="nurofen" translatable="false">Nurofen caps</string>
+    <string name="random_price" translatable="false">5.4€</string>
+    <string name="title_activity_details" translatable="false">DetailsActivity</string>
     <string name="action_share">Share</string>
     <string name="read_info">Read info about this medicine:</string>
     <string name="appwidget_textName">Name</string>
     <string name="appwidget_textPrice">Price</string>
-    <string name="add_widget">Add widget</string>
+    <string name="add_widget" translatable="false">Add widget</string>
     <string name="isAdded">is now added to widget</string>
-    <string name="defaultInfo">--</string>
+    <string name="defaultInfo" translatable="false">--</string>
     <string name="medicine_info">Medicine Info</string>
     <string name="appwidget_textNameDummy">Name:</string>
     <string name="appwidget_textPriceDummy">Price:</string>
-    <string name="instructionsForOtc">ΜΕ ΤΗ ΛΕΙΤΟΥΡΓΙΑ ΑΥΤΗ ΜΠΟΡΕΙΤΕ ΝΑ ΒΡΕΙΤΕ ΕΥΚΟΛΑ ΚΑΙ ΓΡΗΓΟΡΑ ΤΟ ICD ΤΗΣ ΔΡΑΣΤΙΚΗΣ ΟΥΣΙΑΣ ΠΟΥ ΣΑΣ ΕΝΔΙΑΦΕΡΕΙ ΑΚΟΛΟΥΘΩΝΤΑΣ ΤΙΣ ΠΑΡΑΚΑΤΩ ΟΔΗΓΙΕΣ\n\n
-    1.  Πληκτρολογείτε ΟΛΟΚΛΗΡΗ τη δραστική ουσία που σας ενδιαφέρει στο πεδίο. Αν ένα φάρμακο έχει 2 δραστικές,τις γράφετε και τις δυο ενώνοντας τις λέξεις με το +\n
-    2.  Στις επιλογές που εμφανίζονται επιλέγετε την επιθυμητή ένδειξη (οι ενδείξεις είναι αντιγραφή απο το SPC του εκάστοτε φαρμάκου)\n
-    3.  Αμέσως εμφανίζεται κωδική λέξη ή το ICD που αντιστοιχεί στην ένδειξη και στη συνέχεια εμφανίζονται οι επιλογές απο την πληθώρα των ICD που αντιστοιχούν
-    σε αυτή την κωδική λέξη (που αντιστοιχούν στην προεπιλεγμένη ένδειξη)\n
-    4.  Επιλέγοντας το σωστό ICD τότε εμφανίζεται κουμπί που αν το πατήσετε σας οδηγεί σε ιστοσελίδα με το SPC ενός τυχαίου φαρμάκου που περιέχει αυτή τη συγκεκριμένη δραστική ουσία\n\n
-        ΣΚΟΠΟΣ ΤΗΣ ΠΑΡΑΠΑΝΩ ΛΕΙΤΟΥΡΓΙΑΣ ΕΙΝΑΙ ΝΑ ΠΕΡΙΟΡΙΣΕΙ ΑΝ ΟΧΙ ΝΑ ΔΕΙΞΕΙ ΑΚΡΙΒΩΣ ΤΟ ICD Ή ΤΑ ICDs ΠΟΥ ΑΝΤΙΣΤΟΙΧΟΥΝ ΣΕ ΑΥΤΗ ΤΗ ΔΡΑΣΤΙΚΗ ΟΥΣΙΑ, ΑΠΟ ΤΗΝ ΠΛΗΘΩΡΑ ΠΟΥ ΥΦΙΣΤΑΝΤΑΙ.\n\n
-    Με τη λειτουργία ΕΥΡΕΣΗ ΜΕ ΠΕΡΙΓΡΑΦΗ μπορείτε να βρείτε το ICD με κωδική λέξη ή περιγραφή χωρίς τη χρήση της δραστικής ουσίας\n\n
-    Οι ενδείξεις είναι επιλεγμένες αποκλειστικά απο τα SPC των φαρμάκων. Η επιλογή των κωδικών λέξεων και τα προτεινόμενα ICDs είναι απόρροια των ενδείξεων μετά απο
-    ενδελεχή έρευνα και Η ΛΕΙΤΟΥΡΓΙΑ ΔΕΝ ΠΕΡΙΟΡΙΖΕΤΑΙ ΜΟΝΟ ΣΤΙΣ ΔΡΑΣΤΙΚΕΣ ΟΥΣΙΕΣ ΤΗΣ ΘΕΤΙΚΗΣ ΛΙΣΤΑΣ. Τα SPC εμφανίζονται με σύνδεση στο ίντερνετ στη μεγάλη βάση του myhealthbox.eu\n\n
-    Αν βρείτε λάθος,έχετε να κάνετε κάποια παρατήρηση ή δε συμφωνείτε με κάτι υπάρχει λειτουργία άμεσης αποστολής μηνύματος στην κεντρική οθόνη της λειτουργίας επάνω δεξιά.\n\n
-    O προγραμματιστής δε φέρει καμία ευθύνη για οποιαδήποτε λάθος χρήση της εφαρμογής,για οποιοδήποτε λάθος και οποιαδήποτε οικονομική ζημιά επιφέρει η χρήση της λειτουργίας αυτής.\n\n
-    Χρησιμοποιώντας την εφαρμογή θεωρείται οτι συμφωνείτε με τους παραπάνω όρους και τις οδηγίες.</string>
+    <string name="instructionsForOtc" translatable="false">Welcome to Otc Medicines application.
+
+The purpose of the app is to help pharmacists, doctors and patients for finding the price of Over The Counter medicine after government has set free the price.
+
+At the beginning all prices are calculated with 35% margin.
+
+At first screen you  see all the OTC medicines that exist in Greece. You are informed about the image, the name and the price. Scrolling down you can informed about the whole database. At the top of the screen there is a search questionmark where tapping on you can search for a specific medicine. After tapping a search bar comes alive and there you can type. You can search either by writing letters or numbers which refer to name and price of medicine
+While typing for searching the list of the medicines shortens.
+You can swipe left or right to delete a medicine if you don’t want to have it inside the list. If you make a mistake you can refer to the below paragraph where there is an explanation how you can fetch a new and updated database from internet.
+
+If you want to change the margin profit of the medicine you tap on the menu and you select “Settings”. In the next screen you select a margin profit from 0 to 99 and going back to main screen all prices are calculated again!
+
+The application gives the opportunity by selecting “Download Database” from menu to download the most recent database from internet so you have the latest prices given by the pharmaceutical companies. This function is also available if someone erases from the database a medicine and wants to get it back. The app will never miss new prices as inside it there is a function to download new database independently and every one week approximately.
+
+By selecting a medicine you are transferred to a new screen where there is all info about the medicine. You can see an enlarged image and you can read all info. In addition by tapping the share button you can send these info to a friend by passing an internet link
+
+Feel free to send comments and suggestions at the e-mail: soloupis@gmail.com
+
+
+</string>
     <string name="instructionsOfUse">Instructions</string>
     <string name="numberBetween">Please select a number between 0 and 99</string>
     <string name="medicineImage">medicine image</string>

@@ -42,7 +42,7 @@
 
             <TextView
                 android:id="@+id/textMainTitle"
-                style="@style/textViewCard"
+                style="@style/textViewCard.Name"
                 android:layout_weight="2"
                 tools:text="@string/nurofen" />
 
