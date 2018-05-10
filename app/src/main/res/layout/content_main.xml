@@ -8,13 +8,16 @@
     tools:context="com.george.otcprices.MainActivity"
     tools:showIn="@layout/activity_main">
 
+    //for d-pad navigation set descendant focusability
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerMainMedicine"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"
         android:layout_marginBottom="@dimen/recycler_margin_bottom"
-        android:layoutAnimation="@anim/layout_animation_fall_down">
-    </android.support.v7.widget.RecyclerView>
+        android:descendantFocusability="afterDescendants"
+        android:layoutAnimation="@anim/layout_animation_fall_down"
+        android:scrollbars="vertical"
+        android:nextFocusDown="@id/adView"/>
 
 </android.support.constraint.ConstraintLayout>
