@@ -12,4 +12,6 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     -->
     <dimen name="widget_margin">8dp</dimen>
     <dimen name="imageViewDimenTablet">150dp</dimen>
+    <dimen name="text_margin_tablet">24dp</dimen>
+    <dimen name="app_bar_height_tablet">360dp</dimen>
 </resources>

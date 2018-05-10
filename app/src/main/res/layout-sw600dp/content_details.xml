@@ -17,7 +17,7 @@
         android:id="@+id/infoForMedicine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_margin="@dimen/text_margin" />
+        android:textSize="20sp"
+        android:layout_margin="@dimen/text_margin_tablet" />
 
 </android.support.v4.widget.NestedScrollView>

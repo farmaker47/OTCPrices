@@ -493,7 +493,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         OtcWidgetProvider.updateWidgetWithInfo(MainActivity.this, appWidgetManager, name, price, appWidgetId);
 
-        Toast.makeText(MainActivity.this, name + " " + getString(R.string.isAdded), Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, name + " " + getString(R.string.isAdded), Toast.LENGTH_SHORT).show();
 
     }
 
