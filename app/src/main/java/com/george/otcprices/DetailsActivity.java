@@ -100,7 +100,7 @@ public class DetailsActivity extends AppCompatActivity {
     private void setupWindowAnimations() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //Gravity.END gives bad crash
+            //Gravity.END gives bad crash so I used right...sorry
             Slide slide = new Slide(Gravity.RIGHT);
             slide.setInterpolator(AnimationUtils.loadInterpolator(this, android.R.interpolator.linear_out_slow_in));
             slide.setDuration(300);

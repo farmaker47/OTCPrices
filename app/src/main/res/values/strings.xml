@@ -55,4 +55,8 @@ Feel free to send comments and suggestions at the e-mail: soloupis@gmail.com
     <string name="instructionsOfUse">Instructions</string>
     <string name="numberBetween">Please select a number between 0 and 99</string>
     <string name="medicineImage">medicine image</string>
+    <string name="down_of_db" translatable="false">Download of Database:</string>
+    <string name="failed" translatable="false">failed</string>
+    <string name="server_returned_http" translatable="false">Server returned HTTP</string>
+    <string name="server" translatable="false">server</string>
 </resources>

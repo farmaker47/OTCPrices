@@ -42,8 +42,8 @@ public class DownloadDBFunction {
             // expect HTTP 200 OK, so we don't mistakenly save error report
             // instead of the file
             if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                Log.e("Server returned HTTP " + connection.getResponseCode()
-                        + " " + connection.getResponseMessage(), "server");
+                Log.e(context.getString(R.string.server_returned_http) + connection.getResponseCode()
+                        + " " + connection.getResponseMessage(), context.getString(R.string.server));
             }
 
             // this will be useful to display download percentage
@@ -61,12 +61,20 @@ public class DownloadDBFunction {
             byte data[] = new byte[4096];
             long total = 0;
             int count;
+
+            //validating data if it is null
+            if (input == null) {
+                Log.e(context.getString(R.string.down_of_db), context.getString(R.string.failed));
+            }
+
             while ((count = input.read(data)) != -1) {
                 total += count;
                 output.write(data, 0, count);
             }
         } catch (Exception e) {
             e.toString();
+            //Logging if data failed to come
+            Log.e(context.getString(R.string.down_of_db), context.getString(R.string.failed));
         } finally {
             try {
                 if (output != null)
