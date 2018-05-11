@@ -34,12 +34,13 @@
                     android:id="@+id/photoMedicine"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:contentDescription="@string/medicineImage" />
+                    android:contentDescription="@string/medicineImage"
+                    android:scaleType="fitXY" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/scrim"/>
+                    android:background="@drawable/scrim" />
 
             </FrameLayout>
 
@@ -61,6 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:nextFocusDown="@id/nestedScrollText"
+        app:elevation="6dp"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@android:drawable/ic_menu_share" />

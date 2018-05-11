@@ -33,7 +33,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -160,7 +159,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 mainRecyclerViewAdapter.setMedicineDataAfterDownload();
 
                 mSearchDeletion = searchView.getQuery().toString();
-                Log.e("deletionString", mSearchDeletion);
 
                 getSupportLoaderManager().restartLoader(DATABASE_LOADER, null, mLoaderDatabase);
 
@@ -180,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         //Ads by Admob
         MobileAds.initialize(this,
-                "ca-app-pub-3940256099942544~3347511713");
+                getString(R.string.adMobMaster));
 
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -202,11 +200,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         mainRecyclerViewAdapter.setMedicineDataAfterDownload();
         getSupportLoaderManager().restartLoader(DATABASE_LOADER, null, mLoaderDatabase);
-
-        /*if (key.equals("margin_key")) {
-            String margin = sharedPreferences.getString("margin_key", getString(R.string.pref_margin_default));
-            Log.e("marginAfter", margin);
-        }*/
     }
 
     @Override
@@ -319,6 +312,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 layoutManager.onRestoreInstanceState(savedRecyclerLayoutState);
             }
 
+            //to use when new db has been downloaded to show notification
             if (mDownLoadString.equals(getString(R.string.new_db))) {
                 showNotification();
                 //reset the name of string
@@ -352,7 +346,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             notificationManager.createNotificationChannel(notificationChannel);
         }
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this,NOTIFICATION_CHANNEL_ID)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
                 .setSmallIcon(R.drawable.ic_file_download)
                 .setContentTitle(getString(R.string.notification))
@@ -391,7 +385,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             public boolean onQueryTextSubmit(String query) {
                 // filter recycler view when query submitted
                 mainRecyclerViewAdapter.getFilter().filter(query);
-                Log.e("Submit", "String");
                 mSearchDeletion = query;
                 return false;
             }
@@ -400,7 +393,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             public boolean onQueryTextChange(String query) {
                 // filter recycler view when text is changed
                 mainRecyclerViewAdapter.getFilter().filter(query);
-                Log.e("Change", "String");
                 return false;
             }
         });
@@ -470,7 +462,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             startActivity(intent2);
             return true;
         }
-
 
         return super.onOptionsItemSelected(item);
     }

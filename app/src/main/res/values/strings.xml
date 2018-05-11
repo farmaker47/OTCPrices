@@ -60,4 +60,5 @@ Feel free to send comments and suggestions at the e-mail: soloupis@gmail.com
     <string name="channel_notification" translatable="false">my_channel_id_01</string>
     <string name="my_notifications" translatable="false">My Notifications</string>
     <string name="channel_descript" translatable="false">Channel description</string>
+    <string name="adMobMaster">ca-app-pub-3940256099942544~3347511713</string>
 </resources>

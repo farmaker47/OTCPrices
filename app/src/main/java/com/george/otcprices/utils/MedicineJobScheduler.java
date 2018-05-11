@@ -22,7 +22,7 @@ public class MedicineJobScheduler {
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(driver);
 
         Job syncSunshineJob = dispatcher.newJobBuilder()
-                /* The Service that will be used to download picture data */
+                /* The Service that will be used to download medicine data */
                 .setService(OtcJobService.class)
                 /* Set the UNIQUE tag used to identify this Job */
                 .setTag(OTC_SYNC_TAG)

@@ -55,7 +55,7 @@ public class DownloadDBFunction {
 
             File fToPut = new File(dir, "otcData.db");
 
-            /// set Append to false if you want to overwrite
+            /// set append to false if you want to overwrite
             output = new FileOutputStream(fToPut, false);
 
             byte data[] = new byte[4096];

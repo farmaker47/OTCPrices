@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +37,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     }
 
     public interface MedicinesClickItemListener {
-        void onListItemClick(int itemIndex, String string, String string2,String string3);
+        void onListItemClick(int itemIndex, String string, String string2, String string3);
     }
 
 
@@ -90,7 +89,6 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     @Override
     public int getItemCount() {
         if (medicinesArrayFiltered != null) {
-            Log.e("number", String.valueOf(medicinesArrayFiltered.size()));
             return medicinesArrayFiltered.size();
         } else {
             return 0;
@@ -105,7 +103,6 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
                 String charString = charSequence.toString();
                 if (charString.isEmpty()) {
                     medicinesArrayFiltered = medicinesArray;
-                    Log.e("Empty", "String");
                 } else {
                     filteredList = new ArrayList<>();
                     for (MedicinesObject row : medicinesArray) {
@@ -117,19 +114,16 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
                     }
 
                     medicinesArrayFiltered = filteredList;
-                    Log.e("Full", String.valueOf(filteredList.size()));
                 }
 
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = medicinesArrayFiltered;
-                Log.e("outside", "String");
                 return filterResults;
             }
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
                 medicinesArrayFiltered = (ArrayList<MedicinesObject>) filterResults.values;
-                Log.e("publishResults", String.valueOf(medicinesArrayFiltered.size()));
                 notifyDataSetChanged();
             }
         };
@@ -158,7 +152,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
             //instead of passing the position we pass the tag which is the _id of the item inside db
             //so we can use it later for deleting while querying and at second detail screen
-            medicinesClickItemListener.onListItemClick((int) itemView.getTag(), textTitle.getText().toString(), internetText.getText().toString(),textPrice.getText().toString());
+            medicinesClickItemListener.onListItemClick((int) itemView.getTag(), textTitle.getText().toString(), internetText.getText().toString(), textPrice.getText().toString());
         }
     }
 

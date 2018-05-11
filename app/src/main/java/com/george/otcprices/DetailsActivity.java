@@ -36,6 +36,7 @@ public class DetailsActivity extends AppCompatActivity {
     private String tagFromMain, nameToSet, internetToSet;
     private static final int ONE_MEDICINE_LOADER = 47;
     private static final String QUERY_BUNDLE = "query_bundle";
+    private static final String ARTICLE_SCROLL_POSITION = "article_scroll_position";
 
     @BindView(R.id.photoMedicine)
     ImageView medicineImage;
@@ -65,7 +66,6 @@ public class DetailsActivity extends AppCompatActivity {
         }
         if (intent.hasExtra(MainActivity.INTERNET_TO_PASS)) {
             internetToSet = intent.getStringExtra(MainActivity.INTERNET_TO_PASS);
-            Log.e("Details", internetToSet);
         }
 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
@@ -90,7 +90,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         //Ads by Admob
         MobileAds.initialize(this,
-                "ca-app-pub-3940256099942544~3347511713");
+                getString(R.string.adMobMaster));
 
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -120,7 +120,7 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putIntArray("ARTICLE_SCROLL_POSITION",
+        outState.putIntArray(ARTICLE_SCROLL_POSITION,
                 new int[]{mScrollView.getScrollX(), mScrollView.getScrollY()});
     }
 
@@ -128,7 +128,7 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        final int[] position = savedInstanceState.getIntArray("ARTICLE_SCROLL_POSITION");
+        final int[] position = savedInstanceState.getIntArray(ARTICLE_SCROLL_POSITION);
         if (position != null)
             mScrollView.post(new Runnable() {
                 public void run() {
@@ -142,7 +142,6 @@ public class DetailsActivity extends AppCompatActivity {
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
             String query = args.getString(QUERY_BUNDLE);
-            Log.e("queryBundle", query);
 
             return new CursorLoader(DetailsActivity.this, OtcConract.MainRecycler.CONTENT_URI_MAIN.buildUpon().appendPath(query).build(), null, null, null, null);
         }
@@ -158,7 +157,6 @@ public class DetailsActivity extends AppCompatActivity {
             byte[] image = data.getBlob(data.getColumnIndex(OtcConract.MainRecycler.MAIN_IMAGE));
             Bitmap bitmap = getImage(image);
             medicineImage.setImageBitmap(bitmap);
-            /*Glide.with(DetailsActivity.this).load(image).into(medicineImage);*/
         }
 
         @Override

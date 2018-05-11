@@ -8,7 +8,9 @@
     tools:context="com.george.otcprices.MainActivity"
     tools:showIn="@layout/activity_main">
 
+<!--
     //for d-pad navigation set descendant focusability
+-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerMainMedicine"

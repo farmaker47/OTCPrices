@@ -15,7 +15,6 @@ public class OtcWidgetProvider extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,String name,String price,
                                 int appWidgetId) {
 
-
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.otc_widget_provider);
         //Click to launch MainActivity
@@ -31,7 +30,6 @@ public class OtcWidgetProvider extends AppWidgetProvider {
             views.setTextViewText(R.id.appwidget_textName, context.getString(R.string.defaultInfo));
             views.setTextViewText(R.id.appwidget_textPrice, context.getString(R.string.defaultInfo));
         }
-
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
