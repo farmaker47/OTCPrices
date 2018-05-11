@@ -1,6 +1,7 @@
 package com.george.otcprices;
 
 import android.app.ActivityOptions;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.SearchManager;
@@ -13,6 +14,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -334,7 +336,23 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     private void showNotification() {
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+        NotificationManager notificationManager = (NotificationManager)
+                getSystemService(Context.NOTIFICATION_SERVICE);
+        String NOTIFICATION_CHANNEL_ID = getString(R.string.channel_notification);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, getString(R.string.my_notifications), NotificationManager.IMPORTANCE_HIGH);
+
+            // Configure the notification channel.
+            notificationChannel.setDescription(getString(R.string.channel_descript));
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.BLUE);
+            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+            notificationChannel.enableVibration(true);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this,NOTIFICATION_CHANNEL_ID)
                 .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
                 .setSmallIcon(R.drawable.ic_file_download)
                 .setContentTitle(getString(R.string.notification))
@@ -350,8 +368,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         notificationBuilder.setContentIntent(resultPendingIntent);
 
-        NotificationManager notificationManager = (NotificationManager)
-                getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
     }
@@ -496,7 +512,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         Toast.makeText(MainActivity.this, name + " " + getString(R.string.isAdded), Toast.LENGTH_SHORT).show();
 
     }
-
 
     private class OtcMedicineBroadcast extends BroadcastReceiver {
         @Override

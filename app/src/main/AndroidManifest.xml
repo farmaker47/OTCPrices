@@ -74,7 +74,7 @@
                 android:resource="@xml/otc_widget_provider_info" />
         </receiver>
 
-        <activity android:name=".Instructions"></activity>
+        <activity android:name=".Instructions"/>
     </application>
 
 </manifest>

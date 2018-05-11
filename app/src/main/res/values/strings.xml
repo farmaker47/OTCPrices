@@ -21,12 +21,10 @@
     <string name="euro_symbol" translatable="false">€</string>
     <string name="nurofen" translatable="false">Nurofen caps</string>
     <string name="random_price" translatable="false">5.4€</string>
-    <string name="title_activity_details" translatable="false">DetailsActivity</string>
     <string name="action_share">Share</string>
     <string name="read_info">Read info about this medicine:</string>
     <string name="appwidget_textName">Name</string>
     <string name="appwidget_textPrice">Price</string>
-    <string name="add_widget" translatable="false">Add widget</string>
     <string name="isAdded">is now added to widget</string>
     <string name="defaultInfo" translatable="false">--</string>
     <string name="medicine_info">Medicine Info</string>
@@ -59,4 +57,7 @@ Feel free to send comments and suggestions at the e-mail: soloupis@gmail.com
     <string name="failed" translatable="false">failed</string>
     <string name="server_returned_http" translatable="false">Server returned HTTP</string>
     <string name="server" translatable="false">server</string>
+    <string name="channel_notification" translatable="false">my_channel_id_01</string>
+    <string name="my_notifications" translatable="false">My Notifications</string>
+    <string name="channel_descript" translatable="false">Channel description</string>
 </resources>
