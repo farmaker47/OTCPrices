@@ -8,7 +8,6 @@
     <string name="search">Search</string>
     <string name="search_hint">Search</string>
     <string name="unknown" translatable="false">Unknown uri:</string>
-    <string name="db_firebase_path" translatable="false"><![CDATA[https://firebasestorage.googleapis.com/v0/b/snow-1557b.appspot.com/o/otcData.db?alt=media&token=e3d344fe-cfe1-4d8c-8d78-ab99c8eb347a]]></string>
     <string name="action_manual_download">Download Database</string>
     <string name="old_db" translatable="false">old_db</string>
     <string name="new_db" translatable="false">new_db</string>
@@ -61,4 +60,6 @@ Feel free to send comments and suggestions at the e-mail: soloupis@gmail.com
     <string name="my_notifications" translatable="false">My Notifications</string>
     <string name="channel_descript" translatable="false">Channel description</string>
     <string name="adMobMaster" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="db_firebae_path"><![CDATA[https://firebasestorage.googleapis.com/v0/b/snow-1557b.appspot.com/o/otcData.db?alt=media&token=e4ac0753-42df-408b-817d-4923ade1dbf1]]></string>
+    <string name="error_downloading_storage_db">Error downloading database</string>
 </resources>

@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -33,6 +34,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -45,6 +47,10 @@ import com.george.otcprices.utils.OtcDBService;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,6 +74,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     public static final String NAME_TO_PASS = "name_to_pass";
     public static final String INTERNET_TO_PASS = "internet_to_pass";
     private String mSearchString, mDownLoadString, mSearchDeletion;
+    private static Uri downUri;
+    private static String urlToUse;
+    public static final String URL_DATABASE_STORAGE = "url_database_storage";
 
     private BroadcastReceiver mBroadcastReceiver;
     private IntentFilter mFilter;
@@ -452,8 +461,27 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
 
         if (id == R.id.action_download_firebase_manually) {
-            Intent intent = new Intent(this, OtcDBService.class);
-            startService(intent);
+            final Intent intent = new Intent(this, OtcDBService.class);
+
+            //get the url from the Firebase storage
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("otcData.db");
+            storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    downUri = uri;
+                    urlToUse = downUri.toString();
+                    intent.putExtra(URL_DATABASE_STORAGE,urlToUse);
+                    startService(intent);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Toast.makeText(MainActivity.this, R.string.error_downloading_storage_db,Toast.LENGTH_LONG).show();
+                    return;
+                }
+            });
+
+
             return true;
         }
 

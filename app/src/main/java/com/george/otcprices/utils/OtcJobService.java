@@ -22,7 +22,7 @@ public class OtcJobService extends JobService {
                 Context context = getApplicationContext();
 
                 //Execute this method to download picture
-                DownloadDBFunction.downloadFromInternet(context);
+                DownloadDBFunction.downloadFromInternet(context,"");
 
                 jobFinished(jobParameters, false);
                 return null;

@@ -2,10 +2,18 @@ package com.george.otcprices.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.george.otcprices.R;
 import com.george.otcprices.data.OtcConract;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,10 +26,11 @@ import java.net.URL;
 public class DownloadDBFunction {
 
     public static final String NUMBER_OF_FIREBASE_RECEIVER = "updating";
+    private static Uri downUri;
+    private static String urlToUse;
 
     //Method for downloading a FRESH database from internet so it can be overwritten
-    public static void downloadFromInternet(Context context) {
-        String urlToUse = context.getString(R.string.db_firebase_path);
+    public static void downloadFromInternet(final Context context,String urlToUse) {
 
         InputStream input = null;
         OutputStream output = null;
