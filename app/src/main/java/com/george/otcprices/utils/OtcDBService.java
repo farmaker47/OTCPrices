@@ -23,6 +23,7 @@ public class OtcDBService extends IntentService {
         if (intent.hasExtra(MainActivity.URL_DATABASE_STORAGE)) {
             url = intent.getStringExtra(MainActivity.URL_DATABASE_STORAGE);
             DownloadDBFunction.downloadFromInternet(this,url);
+
         }
     }
 }
