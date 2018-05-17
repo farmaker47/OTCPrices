@@ -60,6 +60,7 @@ Feel free to send comments and suggestions at the e-mail: soloupis@gmail.com
     <string name="my_notifications" translatable="false">My Notifications</string>
     <string name="channel_descript" translatable="false">Channel description</string>
     <string name="adMobMaster" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
-    <string name="db_firebae_path"><![CDATA[https://firebasestorage.googleapis.com/v0/b/snow-1557b.appspot.com/o/otcData.db?alt=media&token=e4ac0753-42df-408b-817d-4923ade1dbf1]]></string>
+    <string name="db_firebae_path" translatable="false"><![CDATA[https://firebasestorage.googleapis.com/v0/b/snow-1557b.appspot.com/o/otcData.db?alt=media&token=e4ac0753-42df-408b-817d-4923ade1dbf1]]></string>
     <string name="error_downloading_storage_db">Error downloading database</string>
+    <string name="no_internet">No internet connection</string>
 </resources>

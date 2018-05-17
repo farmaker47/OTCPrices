@@ -15,6 +15,8 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,6 +39,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.george.otcprices.data.OTCMainDBHelper;
@@ -461,27 +464,34 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
 
         if (id == R.id.action_download_firebase_manually) {
-            final Intent intent = new Intent(this, OtcDBService.class);
 
-            //get the url from the Firebase storage
-            StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("otcData.db");
-            storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    downUri = uri;
-                    urlToUse = downUri.toString();
-                    intent.putExtra(URL_DATABASE_STORAGE,urlToUse);
-                    startService(intent);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    Toast.makeText(MainActivity.this, R.string.error_downloading_storage_db,Toast.LENGTH_LONG).show();
-                    return;
-                }
-            });
+            //Upon creation we check if there is internet connection
+            ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+            // If there is a network connection, fetch db
+            if (networkInfo != null && networkInfo.isConnected()) {
+                final Intent intent = new Intent(this, OtcDBService.class);
 
-
+                //get the url from the Firebase storage
+                StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("otcData.db");
+                storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        downUri = uri;
+                        urlToUse = downUri.toString();
+                        intent.putExtra(URL_DATABASE_STORAGE,urlToUse);
+                        startService(intent);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Toast.makeText(MainActivity.this, R.string.error_downloading_storage_db,Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                });
+            } else {
+                Toast.makeText(MainActivity.this, R.string.no_internet,Toast.LENGTH_LONG).show();
+            }
             return true;
         }
 

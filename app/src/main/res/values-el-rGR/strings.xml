@@ -21,4 +21,6 @@
     <string name="instructionsOfUse">Οδηγίες</string>
     <string name="numberBetween">Παρακαλώ επιλέξτε κέρδος μεταξυ 0 και 99</string>
     <string name="medicineImage">φωτο φαρμάκου</string>
+    <string name="error_downloading_storage_db">Πρόβλημα στη μεταφόρτωση της βάσης</string>
+    <string name="no_internet">Δεν υπάρχει σύνδεση στο ίντερνετ</string>
 </resources>
